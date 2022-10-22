@@ -50,7 +50,7 @@ function initial(type){
 const LearnWordAdvanced = forwardRef((props, ref) => {
     const history = useHistory();
     function backToGames() {
-        history.push("/games");
+        history.push("/GamesWords");
     }
     //The correct words that the user got so far
     var [correct, setCorrect] = useState('');  

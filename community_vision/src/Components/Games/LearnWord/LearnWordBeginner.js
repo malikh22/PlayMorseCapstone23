@@ -52,7 +52,7 @@ function initial(type){
 const LearnWordBeginner = forwardRef((props, ref) => {
     const history = useHistory();
     function backToGames() {
-        history.push("/games");
+        history.push("/GamesWords");
     }
     //Track user input
     var [input, setInput] = useState('');

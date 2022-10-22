@@ -51,7 +51,7 @@ function updateTutorial() {
 const SandboxWords = forwardRef((props, ref) => {
     const history = useHistory();
     function backToGames() {
-        history.push("/games");
+        history.push("/GamesThemes");
     }
     const [input, setInput] = React.useState('');
     const output = morseToChar(input);

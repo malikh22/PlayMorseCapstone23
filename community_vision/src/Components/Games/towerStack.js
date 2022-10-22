@@ -58,7 +58,7 @@ var t;
 const TowerStack = forwardRef((props, ref) => {
     const history = useHistory();
     function backToGames() {
-        history.push("/games");
+        history.push("/GamesThemes");
     }
     var [input, setInput] = React.useState('');
     var output = morseToChar(input);

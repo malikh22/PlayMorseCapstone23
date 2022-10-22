@@ -53,7 +53,7 @@ function initial(type){
 const Dots = forwardRef((props, ref) => {
     const history = useHistory();
     function backToGames() {
-        history.push("/games");
+        history.push("/GamesBasics");
     }
     //Track user input
     var [input, setInput] = useState('');

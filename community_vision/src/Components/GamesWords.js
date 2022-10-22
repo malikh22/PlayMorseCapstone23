@@ -59,7 +59,7 @@ const GamesWords = forwardRef((props, ref) => {
           </Grid>
         </Grid>
       </Container>
-      <Link className='nav-link' to="/" style={{
+      <Link className='nav-link' to="/games" style={{
         backgroundColor: backgroundColor
       }}>
         <button style={{
@@ -72,7 +72,7 @@ const GamesWords = forwardRef((props, ref) => {
           backgroundColor: '#21AAA4',
           borderColor: '#21AAA4',
           color: 'white',
-        }}>Go Back to Home</button>
+        }}>Back</button>
       </Link>
 
       <Link className='nav-link' to="/" style={{

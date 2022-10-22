@@ -88,7 +88,7 @@ const ThreeHits = forwardRef((props, ref) => { //CHANGE ME
 
     const history = useHistory();
     function backToGames() {
-        history.push("/games");
+        history.push("/GamesBasics");
     }
 
     var [index, setIndex] = useState(0);

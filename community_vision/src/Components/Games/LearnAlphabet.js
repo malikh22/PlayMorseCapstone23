@@ -105,7 +105,7 @@ const LearnAlphabet = forwardRef((props, ref) => { //CHANGE ME
 
     const history = useHistory();
     function backToGames() {
-        history.push("/games");
+        history.push("/GamesLetters");
     }
 
     var [index, setIndex] = useState(0);

@@ -47,7 +47,7 @@ const AlphabetRacePractice = forwardRef((props, ref) => {
 
     const history = useHistory();
     function backToGames() {
-        history.push("/games");
+        history.push("/GamesThemes");
     }
 
     // user input

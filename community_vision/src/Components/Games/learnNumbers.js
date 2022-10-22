@@ -110,7 +110,7 @@ const LearnNumbers = forwardRef((props, ref) => {
 
     const history = useHistory();
     function backToGames() {
-        history.push("/games");
+        history.push("/GamesLetters");
     }
 
     var [index, setIndex] = useState(0);

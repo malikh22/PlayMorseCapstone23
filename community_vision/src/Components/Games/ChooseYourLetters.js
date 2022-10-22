@@ -128,7 +128,7 @@ const ChooseYourLetters = forwardRef((props, ref) => {
 
     const history = useHistory();
     function backToGames() {
-        history.push("/games");
+        history.push("/GamesLetters");
     }
 
     var [index, setIndex] = useState(-1);
