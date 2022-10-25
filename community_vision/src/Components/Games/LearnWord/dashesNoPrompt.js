@@ -32,7 +32,8 @@ import { useHistory } from "react-router-dom";
 //Variables for time
 var t;
 
-function initial(type){
+//Gets game values fom local storage
+export function initial(type){
     if(localStorage.getItem(type) != null){
         return localStorage.getItem(type);
     }
@@ -41,14 +42,21 @@ function initial(type){
     } else if(type === 'size'){
         return 29;
     } else if(type === 'speed'){
-        return 1.5;
+        return 2.5;
     } else if(type === 'backgroundColor'){
-        return 'blue';
+        return '#e8e8e8';
     } else if(type === 'fontColor'){
-        return 'white';
+        return 'black';
+    } else if (type === 'dashButtonColor') {
+        return 'red';
+    } else if (type === 'dotButtonColor') {
+        return 'yellow';
+    } else if (type === 'alphabetRaceHS'){
+        return 0;
+    } else if (type === 'alphabetRacePracticeHS'){
+        return 0;
     }
 }
-
 
 const DashesNoPrompt = forwardRef((props, ref) => {
     const history = useHistory();
