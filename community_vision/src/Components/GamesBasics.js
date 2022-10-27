@@ -93,7 +93,7 @@ const GamesBasics = forwardRef((props, ref) => {
           backgroundColor: '#21AAA4',
           borderColor: '#21AAA4',
           color: 'white',
-        }}>Back</button>
+        }}>Back to Games</button>
       </Link>
 
       <Link className='nav-link' to="/" style={{

@@ -17,7 +17,7 @@ import { Transition } from 'react-spring/renderprops';
 import sounds from "./LetterSounds";
 import correctFX from "../Assets/Sounds/correct.mp3"
 import { CollectionsBookmarkRounded } from '@material-ui/icons';
-
+import {Link} from "react-router-dom";
 
 var t;
 var list = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; //CHANGE ME
@@ -440,7 +440,17 @@ const LearnAlphabet = forwardRef((props, ref) => { //CHANGE ME
             <div style={{ gridArea: 'top' }}>
                 { <div style={{ position: 'absolute' }}>
                     <Container>
-                        <BackButton />
+                    <Link className='nav-link' to="/GamesLetters">
+                            <button style={{
+                                height: '90%',
+                                width: '100%',
+                                fontSize: '4vh',
+                                fontWeight: 800,
+                                userSelect: 'none',
+                                cursor: 'pointer',
+                                marginBottom: "20px"
+                            }}>Back</button>
+                        </Link>
                     </Container>
                 </div> }
                 <div id="sampleMorse">

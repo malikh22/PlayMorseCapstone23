@@ -12,7 +12,7 @@ import Grid from "@material-ui/core/Grid";
 import {Transition} from "react-spring/renderprops";
 import Card from "@material-ui/core/Card";
 import {useHistory} from "react-router-dom";
-
+import {Link} from "react-router-dom";
 
 var t;
 
@@ -195,7 +195,17 @@ const ButtonsTutorial = forwardRef((props, ref) => {
             <div style={{gridArea: 'top'}}>
                 <div style={{ position: 'absolute' }}>
                     <Container>
-                        <BackButton/>
+                        <Link className='nav-link' to="/GamesBasics">
+                            <button style={{
+                                height: '90%',
+                                width: '100%',
+                                fontSize: '4vh',
+                                fontWeight: 800,
+                                userSelect: 'none',
+                                cursor: 'pointer',
+                                marginBottom: "20px"
+                            }}>Back</button>
+                        </Link>
                         <Grid container justify='left'>
                             <Grid item>
 

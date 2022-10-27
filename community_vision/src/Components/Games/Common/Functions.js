@@ -249,7 +249,7 @@ export function ButtonsOld(props)
 export function BackButton()
     {
         return (
-            <Link className='nav-link' to="/games">
+            <Link id="backBtnLink" className='nav-link' to="/games">
                 <button style={{
                     height: '90%',
                     width: '100%',
@@ -258,7 +258,7 @@ export function BackButton()
                     userSelect: 'none',
                     cursor: 'pointer',
                     marginBottom: "20px"
-                }}>Go back to games</button>
+                }}>Back to Games</button>
             </Link>
         );
     }

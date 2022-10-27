@@ -6,6 +6,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import Grid from '@material-ui/core/Grid';
 import LearnAlphabetIMG from "./Games/LearnAlphabet.jpg" //test image (pig)
 import sandboxIMG from "./Games/Icons/sandbox letters.png"
+import hitIMG from "./Games/Icons/hitIMG.png"
 import sandBocWords from "./Games/Icons/sandbox words.png"
 import raceLevel4 from "./Games/Icons/alphabet race game 2.jpg"
 import { Container } from '@material-ui/core';
@@ -57,7 +58,7 @@ const GamesThemes = forwardRef((props, ref) => {
             <GameSelection name='Sandbox Words' img={sandBocWords} link='/sandboxWords' difficulty='Level 1' />
           </Grid>
           <Grid item xs={6} sm={4} md={3} lg={2} xl={1}>
-            <GameSelection name='Tower Stack' img={sandBocWords} link='/towerStack' difficulty='Level 1' />
+            <GameSelection name='Tower Stack' img={hitIMG} link='/towerStack' difficulty='Level 1' />
           </Grid>
         </Grid>
       </Container>
@@ -74,7 +75,7 @@ const GamesThemes = forwardRef((props, ref) => {
           backgroundColor: '#21AAA4',
           borderColor: '#21AAA4',
           color: 'white',
-        }}>Back</button>
+        }}>Back to Games</button>
       </Link>
 
       <Link className='nav-link' to="/" style={{

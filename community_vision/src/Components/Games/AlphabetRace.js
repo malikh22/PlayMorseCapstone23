@@ -11,6 +11,7 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import {initial, Buttons, resetInputLength, resetInputTime, BackButton} from "./Common/Functions";
 import { useHistory } from "react-router-dom";
 import { Transition } from 'react-spring/renderprops';
+import {Link} from "react-router-dom";
 
 var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 var t;
@@ -415,7 +416,17 @@ const AlphabetRace = forwardRef((props, ref) => {
                 </div>
                 <div style={{ position: 'absolute' }}>
                     <Container>
-                        <BackButton />
+                        <Link className='nav-link' to="/GamesWords">
+                            <button style={{
+                                height: '90%',
+                                width: '100%',
+                                fontSize: '4vh',
+                                fontWeight: 800,
+                                userSelect: 'none',
+                                cursor: 'pointer',
+                                marginBottom: "20px"
+                            }}>Back</button>
+                        </Link>
                     </Container>
                 </div>
                 <div style={{

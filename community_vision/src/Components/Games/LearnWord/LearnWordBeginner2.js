@@ -17,7 +17,7 @@ import sounds from "../LetterSounds";
 import StartScreen from "./LearnWordsStart";
 import correctFX from "../../Assets/Sounds/correct.mp3";
 import { useHistory } from "react-router-dom";
-
+import {Link} from "react-router-dom";
 
 /*
 * Game that shows a picture and word that associates with that picture
@@ -264,7 +264,17 @@ const LearnWordBeginner2 = forwardRef((props, ref) => {
                 <div style={{gridArea: 'top'}}>
                     <div style={{ position: 'absolute' }}>
                         <Container>
-                            <BackButton />
+                            <Link className='nav-link' to="/GamesWords">
+                                <button style={{
+                                    height: '90%',
+                                    width: '100%',
+                                    fontSize: '4vh',
+                                    fontWeight: 800,
+                                    userSelect: 'none',
+                                    cursor: 'pointer',
+                                    marginBottom: "20px"
+                                }}>Back</button>
+                            </Link>
                             {/* <Grid container justify='left'>
                                 <Grid item>
                                     <Tutorial background={backgroundColor} level='beginner' fColor={fontColor}/>
