@@ -2,10 +2,11 @@
 
 ![Logo](community_vision/src/Components/logo.png)
 ## _Emily Hoppe, Natalie Taschuk, Aron Manalang_
+### University of Portland Capstone Project
 
-[Check out the live website!][df1]
+[Check out the website!][df1]
 
-University of Portland Capstone Project
+
 
 The Community Vision Assistive Technology (AT) Lab is an education and resource center in Portland, Oregon that promotes accessibility & inclusion in our community. We collaborate with people with disabilities, families, caregivers, professionals, and community partners. We want more people to see, access, and feel comfortable with AT. The Lab offers AT Consultations, Trainings & Workshops, Social Groups, a free Loan Closet, Equipment, Scholarships and more. 
 
