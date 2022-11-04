@@ -56,7 +56,8 @@ function updateTutorial() {
 }
 var t;
 
-const TowerStack = forwardRef((props, ref) => {
+
+const towerStack = forwardRef((props, ref) => {
     const history = useHistory();
     function backToGames() {
         history.push("/GamesThemes");
@@ -187,7 +188,7 @@ const TowerStack = forwardRef((props, ref) => {
                                             paddingLeft: '2vw',
                                             paddingRight: '2vw',
                                             fontSize: '4vh'
-                                        }}>Type any Morse combination and see what its letter/number is.
+                                        }}>Type any Morse combination to add a letter to the stack.
                                         </p>
                                     </Card>
                                 </Grid>
@@ -212,20 +213,19 @@ const TowerStack = forwardRef((props, ref) => {
             <div style={{gridArea: 'top'}}>
                 <div style={{ position: 'absolute' }}>
                     <Container>
-                        <Link className='nav-link' to="/GamesThemes">
-                            <button style={{
-                                height: '90%',
-                                width: '100%',
-                                fontSize: '4vh',
-                                fontWeight: 800,
-                                userSelect: 'none',
-                                cursor: 'pointer',
-                                marginBottom: "20px"
-                            }}>Back</button>
-                        </Link>
                         <Grid container justify='left'>
                             <Grid item>
-
+                                <Link className='nav-link' to="/GamesThemes">
+                                    <button style={{
+                                        height: '90%',
+                                        width: '100%',
+                                        fontSize: '4vh',
+                                        fontWeight: 800,
+                                        userSelect: 'none',
+                                        cursor: 'pointer',
+                                        marginBottom: "20px"
+                                    }}>Back</button>
+                                </Link>
                             </Grid>
                         </Grid>
                     </Container>
@@ -299,7 +299,7 @@ const RadioContent = () => {
         <div className="radiocontent" >
             <a href="#" alt="Home">
             </a>
-            <p id="tutorialText" value="Change Text">Welcome to the Tower Stack game! </p>
+            <p id="tutorialText" value="Change Text">Welcome to the Tower Stack game!</p>
             <img src={spacebar} alt="Spacebar" id="spaceImage" style={{ display: "none" }}></img>
             <img src={enterButton} alt="Enter Button" id="enterImage" style={{ display: "none" }}></img>
             <button onClick={function () {
@@ -309,4 +309,5 @@ const RadioContent = () => {
     );
 };
 
-export default TowerStack;
+
+export default towerStack;
