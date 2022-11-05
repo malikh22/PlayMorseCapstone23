@@ -18,6 +18,7 @@ import LearnWordBeginner from './Components/Games/LearnWord/LearnWordBeginner';
 import LearnWordMedium from './Components/Games/LearnWord/LearnWordMedium';
 import AlphabetNoHelp from "./Components/Games/NoHelpAlphabet";
 import SandboxLetters from "./Components/Games/SandboxLetters";
+import TowerStack from "./Components/Games/towerStack";
 import SandboxWords from "./Components/Games/SandboxWords";
 import SortedAlphabet from "./Components/Games/sorted";
 import LearnNumbers from "./Components/Games/learnNumbers";
@@ -121,6 +122,9 @@ function App() {
           </Route>
           <Route path="/sandboxLetters">
             <SandboxLetters ref={currentRef}/>
+          </Route>
+          <Route path="/towerStack">
+            <TowerStack ref={currentRef}/>
           </Route>
           <Route path="/sandboxWords">
             <SandboxWords ref={currentRef}/>
