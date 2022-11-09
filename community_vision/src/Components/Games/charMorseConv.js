@@ -78,7 +78,7 @@ export function morseToChar(x) {
     } else if (x === '-----'){
         return '0';
     } else{
-        return '';
+        return ' ';
     }
 }
 
@@ -156,7 +156,7 @@ export function charToMorse(x) {
     } else if (x === '0'){
         return '-----';
     } else{
-        return '';
+        return ' ';
     }
 }
 

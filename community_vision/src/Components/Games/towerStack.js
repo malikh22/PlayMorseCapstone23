@@ -14,7 +14,7 @@ import useSound from 'use-sound';
 import dashSound from '../Assets/Sounds/dash.mp3'
 import dotSound from '../Assets/Sounds/dot.mp3'
 import {animated, useSpring} from 'react-spring';
-import {initial, Buttons, resetInputTime, resetInputLength, BackButton} from "./Common/Functions";
+import {initial, Buttons, ButtonsWithoutInput, resetInputTime, resetInputLength, BackButton} from "./Common/Functions";
 import spacebar from "../Assets/Images/spacebar.png";
 import enterButton from "../Assets/Images/enterButton.png";
 import {Container} from "@material-ui/core";
@@ -25,6 +25,9 @@ import {useHistory} from "react-router-dom";
 import {Link} from "react-router-dom";
 
 var textIndex = 0;
+
+//tower.push(x) to add to the tower?
+var tower = [];
 
 function updateTutorial() {
     var space = document.getElementById('spaceImage');
@@ -82,6 +85,7 @@ const towerStack = forwardRef((props, ref) => {
         { volume: volume / 100 }
     );
     const fSize = size + 'vh';
+    const tfSize = (size - 7) + "vh"; //slightly smaller for sake of tower
     const sfSize = size / 3 + 'vh';
     var [startScreen, setStartScreen] = useState(true);
     var [endScreen, setEndScreen] = useState(false);
@@ -231,11 +235,23 @@ const towerStack = forwardRef((props, ref) => {
                     </Container>
                 </div>
                 <div>
-                    <animated.h1 id = "output" style={{
+
+                    <animated.h1 id = "output" style={{ //Letter
                         lineHeight: 0,
                         color: fontColor,
-                        fontSize: fSize
+                        fontSize: tfSize, //smaller font slightly for tower room
+                        minHeight: '90%'/* ,
+                        display: 'none' */
                     }}>{output}</animated.h1>
+
+                    <animated.h1 id="input" style={{ //Morse
+                        //this is an attempt to reorganize the screen to get space for the tower
+                        lineHeight: 0,
+                        color: fontColor,
+                        fontSize: sfSize/* ,
+                        display: 'none' */
+                    }}>{input}</animated.h1>
+
                     <animated.h1 style={{
                         lineHeight: 0,
                         color: fontColor,
@@ -243,8 +259,7 @@ const towerStack = forwardRef((props, ref) => {
                     }}></animated.h1>
                 </div>
             </div>
-
-            <Buttons
+            <ButtonsWithoutInput
                 fontColor={fontColor}
                 backgroundColor={backgroundColor}
                 buttonColor={buttonColor}
@@ -308,6 +323,5 @@ const RadioContent = () => {
         </div>
     );
 };
-
 
 export default towerStack;

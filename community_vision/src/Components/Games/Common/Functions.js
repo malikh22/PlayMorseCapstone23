@@ -12,6 +12,8 @@ import {spacing} from "@material-ui/system";
 //Help received from https://stackoverflow.com/questions/46656476/rendering-empty-space-in-react
 //for making empty elements take space
 
+
+
 //Gets game values fom local storage
 export function initial(type){
     if(localStorage.getItem(type) != null){
@@ -147,6 +149,116 @@ export function Buttons(props)
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center'
+                                }} onMouseDown={function () {
+                                    props.setInput(input + '-');
+                                    playDash();
+                                    //console.log("testdash");
+                                    //clearTimeout(t);
+                                    //t = resetInputTime(t, input, props.setInput, props.resetTimer, props.game);
+                                }}>
+                                    -
+                                </button>
+                            </CardActionArea>
+                        </Card>
+                    </Grid>
+                </Grid>
+            </Container>
+        </div>
+    )
+}
+
+
+export function ButtonsWithoutInput(props)
+{
+    let t = props.t;
+    const input = props.input;
+    const [playDash] = useSound(
+        dashSound,
+        { volume: props.volume / 100 }
+    );
+    const [playDot] = useSound(
+        dotSound,
+        { volume: props.volume / 100 }
+    );
+
+    return (
+        <div style={{ gridArea: 'middle' }}>
+            <Container>
+                <Grid container justify='center' spacing={0}>
+                    <Grid item xs={1}>
+                        <p style={{
+                            lineHeight: 0,
+                            color: props.fontColor,
+                            fontSize: '10vh',
+                            pointer: 'default',
+                            userSelect: 'none'
+                        }}> &nbsp; </p>
+                    </Grid>
+                    <Grid item sm={10} id="input">
+                        <p style={{
+                            lineHeight: 0,
+                            color: props.fontColor,
+                            fontSize: '10vh',
+                            textAlign: 'center',
+                            pointer: 'default',
+                            userSelect: 'none',
+                            display: 'none'
+                        }}>{input}</p>
+                    </Grid>
+                    <Grid item xs={1}>
+                        <p style={{
+                            lineHeight: 0,
+                            color: props.fontColor,
+                            fontSize: '10vh',
+                            pointer: 'default',
+                            userSelect: 'none'
+                        }}> &nbsp; </p>
+                    </Grid>
+                </Grid>
+                <Grid container justify='center' spacing={2}>
+                    <Grid item xs={4}>
+                        <Card>
+                            {/* button updates */}
+                            <CardActionArea>
+                                <button id="dotButton" style={{
+                                    backgroundColor: props.dotButtonColor,
+                                    width: '100%',
+                                    height: '20vh',
+                                    cursor: 'pointer',
+                                    textAlign: 'center',
+                                    fontSize: '35vh',
+                                    color: props.fontColor,
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center'
+                                }} onMouseDown={function () {
+                                    props.setInput(input + '•');
+                                    playDot();
+                                    //console.log("testdot");
+                                    //clearTimeout(t);
+                                    //t = resetInputTime(t, input, props.setInput, props.resetTimer, props.game);
+                                }}>
+                                        <span
+                                        >•
+                                        </span>
+                                </button>
+                            </CardActionArea>
+                        </Card>
+                    </Grid>
+                    <Grid item xs={4}>
+                        <Card>
+                            <CardActionArea>
+                                <button id="dashButton" style={{
+                                    backgroundColor: props.dashButtonColor,
+                                    width: '100%',
+                                    height: '20vh',
+                                    cursor: 'pointer',
+                                    textAlign: 'center',
+                                    fontSize: '35vh',
+                                    color: props.fontColor,
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
                                 }} onMouseDown={function () {
                                     props.setInput(input + '-');
                                     playDash();
