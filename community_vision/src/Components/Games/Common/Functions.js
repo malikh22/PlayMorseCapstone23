@@ -59,6 +59,7 @@ export function resetInputTime(t, input, setInput, resetTimer)
     return t;
 }
 
+
 export function Buttons(props)
 {
     let t = props.t;

@@ -1,10 +1,10 @@
 /* 
 Tower Stack
-Main game file -skeleton
+Main game file - in progress
 
 @Author: Emily, Natalie, Aron
 Created: 10/12/22
-Updated: 10/12/22
+Updated: 11/13/22
 */
 
 import React, { useState, forwardRef, useImperativeHandle } from 'react';
@@ -26,7 +26,7 @@ import {Link} from "react-router-dom";
 
 var textIndex = 0;
 
-//tower.push(x) to add to the tower?
+//tower.push(x) to add to the tower
 var tower = [];
 
 function updateTutorial() {
@@ -90,9 +90,16 @@ const towerStack = forwardRef((props, ref) => {
     var [startScreen, setStartScreen] = useState(true);
     var [endScreen, setEndScreen] = useState(false);
 
-    resetInputLength(input, setInput);
+    //adapted from sandboxWords
     clearTimeout(t);
-    t = resetInputTime(t, input, setInput, resetTimer);
+    t = setTimeout(function(){
+        if(output != ' ')tower.push(output);
+        setInput('');
+    }, resetTimer);
+
+    resetInputLength(input, setInput);
+
+    
 
     const [handleKeyDown, setHandleKeyDown] = useState(true);
     document.onkeydown = function (evt) {
@@ -237,26 +244,61 @@ const towerStack = forwardRef((props, ref) => {
                 <div>
 
                     <animated.h1 id = "output" style={{ //Letter
+            //Hid all three of these to create space for the towers
                         lineHeight: 0,
                         color: fontColor,
-                        fontSize: tfSize, //smaller font slightly for tower room
-                        minHeight: '90%'/* ,
-                        display: 'none' */
+                        fontSize: tfSize, //smaller font slightly for tower 
+                        minHeight: '90%',
+                        display: 'none'
                     }}>{output}</animated.h1>
 
                     <animated.h1 id="input" style={{ //Morse
-                        //this is an attempt to reorganize the screen to get space for the tower
+                        //an attempt to reorganize the screen to get space for the tower
                         lineHeight: 0,
                         color: fontColor,
-                        fontSize: sfSize/* ,
-                        display: 'none' */
+                        fontSize: sfSize,
+                        display: 'none'
                     }}>{input}</animated.h1>
 
                     <animated.h1 style={{
                         lineHeight: 0,
                         color: fontColor,
-                        fontSize: sfSize
+                        fontSize: sfSize,
+                        display: 'none'
                     }}></animated.h1>
+                </div>
+                <div>
+                    <Grid container direction='column' justify-content='center' alignItems='center' style={{ height: '100%', width: '100%', zIndex: 2 }}>
+                    <animated.h1 id = "output" style={{ //Letter
+                        lineHeight: 0,
+                        right: '50%',
+                        bottom: '50%',
+                        transform: 'translate(50%,50%)',
+                        position: 'absolute',
+                        color: fontColor,
+                        fontSize: tfSize //smaller font slightly for tower 
+                    }}>{output}</animated.h1>
+                    <animated.h1 id="input" style={{ //Morse
+                        //an attempt to reorganize the screen to get space for the tower
+                        lineHeight: 0,
+                        color: fontColor,
+                        fontSize: sfSize,
+                        right: '50%',
+                        bottom: '45%',
+                        transform: 'translate(50%,50%)',
+                        position: 'absolute',
+                    }}>{input}</animated.h1>
+                    <animated.h1 id="input" style={{ //Morse
+                        //an attempt to reorganize the screen to get space for the tower
+                        lineHeight: 0,
+                        color: fontColor,
+                        fontSize: sfSize,
+                        right: '50%',
+                        bottom: '45%',
+                        transform: 'translate(50%,50%)',
+                        position: 'absolute',
+                    }}>{tower[tower.length - 1] + ' ' + tower.length}</animated.h1>
+                    </Grid>
                 </div>
             </div>
             <ButtonsWithoutInput
