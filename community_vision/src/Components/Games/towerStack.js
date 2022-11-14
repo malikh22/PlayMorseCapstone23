@@ -259,8 +259,6 @@ const towerStack = forwardRef((props, ref) => {
                         fontSize: sfSize,
                         display: 'none'
                     }}>{input}</animated.h1>
-
-                    
                 </div>
                 <div>
                     <Grid container direction='column' justify-content='center' alignItems='center' style={{ height: '100%', width: '100%', zIndex: 2 }}>
@@ -273,6 +271,16 @@ const towerStack = forwardRef((props, ref) => {
                         color: fontColor,
                         fontSize: tfSize //smaller font slightly for tower 
                     }}>{output}</animated.h1>
+                    <animated.h1 id="input" style={{ //Morse
+                        //an attempt to reorganize the screen to get space for the tower
+                        lineHeight: 0,
+                        color: fontColor,
+                        fontSize: sfSize,
+                        right: '50%',
+                        bottom: '45%',
+                        transform: 'translate(50%,50%)',
+                        position: 'absolute',
+                    }}>{input}</animated.h1>
                     <animated.h1 id="input" style={{ //Morse
                         //an attempt to reorganize the screen to get space for the tower
                         lineHeight: 0,
