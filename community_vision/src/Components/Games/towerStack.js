@@ -260,12 +260,7 @@ const towerStack = forwardRef((props, ref) => {
                         display: 'none'
                     }}>{input}</animated.h1>
 
-                    <animated.h1 style={{
-                        lineHeight: 0,
-                        color: fontColor,
-                        fontSize: sfSize,
-                        display: 'none'
-                    }}></animated.h1>
+                    
                 </div>
                 <div>
                     <Grid container direction='column' justify-content='center' alignItems='center' style={{ height: '100%', width: '100%', zIndex: 2 }}>
