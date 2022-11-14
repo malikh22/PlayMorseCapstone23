@@ -292,7 +292,7 @@ const towerStack = forwardRef((props, ref) => {
                         position: 'absolute',
                     }}>{input}</animated.h1>
                     <animated.h1 id="input" style={{ //Morse
-                        //an attempt to reorganize the screen to get space for the tower
+                        //temporary to demonstrate adding to array
                         lineHeight: 0,
                         color: fontColor,
                         fontSize: sfSize,
