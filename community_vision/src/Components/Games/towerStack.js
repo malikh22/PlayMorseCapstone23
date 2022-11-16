@@ -68,7 +68,7 @@ const towerStack = forwardRef((props, ref) => {
         history.push("/GamesThemes");
     }
 
-    //tower.length = useState(0);
+    //using index to manage array length helps manage reset on page out
     var [index, setIndex] = useState(0);
     tower.length = index;
 
@@ -101,7 +101,9 @@ const towerStack = forwardRef((props, ref) => {
     clearTimeout(t);
     t = setTimeout(function(){
         if(output != ' '){
-        setIndex(prevState => prevState + 1);
+        //index resets on page  (found ex in 1,2 hit)
+        setIndex(prevState => prevState + 1); 
+        //update tower
         tower[index] = output;
         }
         setInput('');
