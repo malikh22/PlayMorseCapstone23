@@ -26,8 +26,7 @@ import {Link} from "react-router-dom";
 
 var textIndex = 0;
 
-//tower.push(x) to add to the tower
-var tower = [];
+
 
 function updateTutorial() {
     var space = document.getElementById('spaceImage');
@@ -57,14 +56,22 @@ function updateTutorial() {
         textIndex = 0;
     }
 }
-var t;
 
+var t;
+//tower.push(x) to add to the tower
+var tower = [];
 
 const towerStack = forwardRef((props, ref) => {
+    
     const history = useHistory();
     function backToGames() {
         history.push("/GamesThemes");
     }
+
+    //tower.length = useState(0);
+    var [index, setIndex] = useState(0);
+    tower.length = index;
+
     var [input, setInput] = React.useState('');
     var output = morseToChar(input);
     const [volume, setVolume] = useState(() => initial('volume'));
@@ -93,13 +100,14 @@ const towerStack = forwardRef((props, ref) => {
     //adapted from sandboxWords
     clearTimeout(t);
     t = setTimeout(function(){
-        if(output != ' ')tower.push(output);
+        if(output != ' '){
+        setIndex(prevState => prevState + 1);
+        tower[index] = output;
+        }
         setInput('');
     }, resetTimer);
 
     resetInputLength(input, setInput);
-
-    
 
     const [handleKeyDown, setHandleKeyDown] = useState(true);
     document.onkeydown = function (evt) {
@@ -160,7 +168,7 @@ const towerStack = forwardRef((props, ref) => {
             gridTemplate: '8fr 8fr / 1fr',
             gridTemplateAreas: '"top" "middle" "bottom'
         }}>
-            <Transition
+            <Transition 
                 items={startScreen}
                 duration={500}
                 from={{ opacity: 0 }}
@@ -368,5 +376,11 @@ const RadioContent = () => {
         </div>
     );
 };
+
+
+function clearArray(){
+    tower = [];
+}
+
 
 export default towerStack;

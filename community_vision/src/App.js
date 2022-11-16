@@ -37,6 +37,7 @@ import DotsNoPrompt from './Components/Games/LearnWord/dotsNoPrompt';
 import DashesNoPrompt from './Components/Games/LearnWord/dashesNoPrompt';
 import LearnWordBeginner2 from './Components/Games/LearnWord/LearnWordBeginner2';
 
+
 function App() {
   const [backgroundColor, setBackgroundColor] = useState(() => '#e8e8e8');
   const currentRef = useRef();
