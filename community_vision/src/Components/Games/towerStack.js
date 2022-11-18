@@ -380,9 +380,4 @@ const RadioContent = () => {
 };
 
 
-function clearArray(){
-    tower = [];
-}
-
-
 export default towerStack;
