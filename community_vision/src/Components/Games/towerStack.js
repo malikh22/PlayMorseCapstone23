@@ -301,7 +301,7 @@ const towerStack = forwardRef((props, ref) => {
                         transform: 'translate(50%,50%)',
                         position: 'absolute',
                     }}>{input}</animated.h1>
-                    <animated.h1 id="input" style={{ //Morse
+                    <animated.h1 id="testing" style={{ //Morse
                         //temporary to demonstrate adding to array
                         lineHeight: 0,
                         color: fontColor,
