@@ -24,6 +24,9 @@ import Card from "@material-ui/core/Card";
 import {useHistory} from "react-router-dom";
 import {Link} from "react-router-dom";
 
+//Natalie:
+import cheeseTS from './cheeseTS.png' //test image
+
 var textIndex = 0;
 
 
@@ -170,6 +173,9 @@ const towerStack = forwardRef((props, ref) => {
             gridTemplate: '8fr 8fr / 1fr',
             gridTemplateAreas: '"top" "middle" "bottom'
         }}>
+             <div>
+                <img src={cheeseTS} alt="picture of cheese" />
+            </div>
             <Transition 
                 items={startScreen}
                 duration={500}
