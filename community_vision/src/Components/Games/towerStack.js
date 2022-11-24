@@ -2,9 +2,9 @@
 Tower Stack
 Main game file - in progress
 
-@Author: Emily, Natalie, Aron
+@Author: Emily Hoppe, Natalie Tashchuk
 Created: 10/12/22
-Updated: 11/13/22
+Updated: 11/13/22, 11/23/22,
 */
 
 import React, { useState, forwardRef, useImperativeHandle } from 'react';
@@ -66,6 +66,7 @@ var tower = [];
 
 const towerStack = forwardRef((props, ref) => {
     
+    //when back button is pushed, return to previous page
     const history = useHistory();
     function backToGames() {
         history.push("/GamesThemes");
@@ -75,8 +76,10 @@ const towerStack = forwardRef((props, ref) => {
     var [index, setIndex] = useState(0);
     tower.length = index;
 
-    var [input, setInput] = React.useState('');
-    var output = morseToChar(input);
+    var [input, setInput] = React.useState('');  //checks when tower updates
+    var output = morseToChar(input);  //converts morse into char
+
+    //setup stuff:
     const [volume, setVolume] = useState(() => initial('volume'));
     const [size, setSize] = useState(() => initial('size'));
     const [speed, setSpeed] = useState(() => initial('speed'));
@@ -96,7 +99,7 @@ const towerStack = forwardRef((props, ref) => {
     );
     const fSize = size + 'vh';
     const tfSize = (size - 7) + "vh"; //slightly smaller for sake of tower
-    const sfSize = size / 3 + 'vh';
+    const sfSize = size / 3 + 'vh';  //size comes from settings page value
     var [startScreen, setStartScreen] = useState(true);
     var [endScreen, setEndScreen] = useState(false);
 
@@ -173,7 +176,7 @@ const towerStack = forwardRef((props, ref) => {
             gridTemplate: '8fr 8fr / 1fr',
             gridTemplateAreas: '"top" "middle" "bottom'
         }}>
-             <div>
+            <div>
                 <img src={cheeseTS} alt="picture of cheese" />
             </div>
             <Transition 
@@ -194,23 +197,27 @@ const towerStack = forwardRef((props, ref) => {
                             zIndex: 1,
                             ...props
                         }}>
-                            <div style={{
+                            <div id='startmenu' style={{
+                                //this div is the starting text that introduces the game
                                 position: 'absolute',
                                 width: '100%',
                                 height: '100%',
                                 backgroundColor: 'black',
                                 opacity: 0.7
                             }} />
+                        
                             <Grid container direction='column' justify='center' alignItems='center' style={{ height: '100%', width: '100%', zIndex: 1 }}>
                                 <Grid item style={{ userSelect: 'none', cursor: 'default' }}>
                                     <Card>
                                         <h1 style={{
+                                            //title of game
                                             marginBottom: '0vh',
                                             fontSize: '8vh'
                                         }}>Tower Stack
                                         </h1>
                                         <br />
                                         <p style={{
+                                            //game instructions
                                             marginTop: '0vh',
                                             paddingLeft: '2vw',
                                             paddingRight: '2vw',
@@ -223,6 +230,7 @@ const towerStack = forwardRef((props, ref) => {
                                 <Grid item style={{ userSelect: 'none' }}>
                                     <Card>
                                         <button id = "start" style={{ fontSize: '8vh', height: '100%', width: '100%', cursor: 'pointer' }}
+                                                //start button 
                                                 onMouseDown={function () {
                                                     if (startScreen) {
                                                         setStartScreen(false);
@@ -236,6 +244,7 @@ const towerStack = forwardRef((props, ref) => {
                         </div>
                         : props => <div />
                 }
+
             </Transition>
             <div style={{gridArea: 'top'}}>
                 <div style={{ position: 'absolute' }}>
@@ -244,6 +253,7 @@ const towerStack = forwardRef((props, ref) => {
                             <Grid item>
                                 <Link className='nav-link' to="/GamesThemes">
                                     <button style={{
+                                        //back button
                                         height: '90%',
                                         width: '100%',
                                         fontSize: '4vh',
@@ -259,8 +269,8 @@ const towerStack = forwardRef((props, ref) => {
                 </div>
                 <div>
 
-                    <animated.h1 id = "output" style={{ //Letter
-            //Hid all three of these to create space for the towers
+                    <animated.h1 id = "output" style={{ //HIDDEN display of character
+                        //Hid all three of these to create space for the towers
                         lineHeight: 0,
                         color: fontColor,
                         fontSize: tfSize, //smaller font slightly for tower 
@@ -268,7 +278,7 @@ const towerStack = forwardRef((props, ref) => {
                         display: 'none'
                     }}>{output}</animated.h1>
 
-                    <animated.h1 id="input" style={{ //Morse
+                    <animated.h1 id="input" style={{ //HIDDEN display of morse input
                         //an attempt to reorganize the screen to get space for the tower
                         lineHeight: 0,
                         color: fontColor,
@@ -276,44 +286,51 @@ const towerStack = forwardRef((props, ref) => {
                         display: 'none'
                     }}>{input}</animated.h1>
                 </div>
+
                 <div>
                     <Grid container direction='column' justify-content='center' alignItems='center' style={{ height: '100%', width: '100%', zIndex: 2 }}>
-                    <animated.h1 id = "output" style={{ //Letter
+                    <animated.h1 id = "output" style={{ //Display Letter
+                        //determine where current letter should display on screen
                         lineHeight: 0,
                         right: '50%',
-                        bottom: '50%',
+                        bottom: '60%',
                         transform: 'translate(50%,50%)',
                         position: 'absolute',
                         color: fontColor,
                         fontSize: tfSize //smaller font slightly for tower 
-                    }}>{output}</animated.h1>
-                    <animated.h1 id="input" style={{ //Morse
-                        //an attempt to reorganize the screen to get space for the tower
+                    }}>{output} </animated.h1>
+
+                    <animated.h1 id="input" style={{ //Display Morse
+                        //determines where current morse input should display on screen
                         lineHeight: 0,
                         color: fontColor,
                         fontSize: sfSize,
                         right: '50%',
-                        bottom: '45%',
+                        bottom: '55%',
                         transform: 'translate(50%,50%)',
                         position: 'absolute',
                     }}>{input}</animated.h1>
-                    <animated.h1 id="input" style={{ //Morse
-                        //an attempt to reorganize the screen to get space for the tower
+
+                    <animated.h1 id="input" style={{ //HIDDEN Morse
+                        //hidden in an attempt to reorganize the screen to get space for the tower
                         lineHeight: 0,
                         color: fontColor,
                         fontSize: sfSize,
-                        right: '50%',
+                        right: '80%',
                         bottom: '45%',
                         transform: 'translate(50%,50%)',
                         position: 'absolute',
+                        display: 'none'
                     }}>{input}</animated.h1>
+
                     <animated.h1 id="testing" style={{ //Morse
-                        //temporary to demonstrate adding to array
+                        //temporary output to demonstrate adding to array
+                        //displays most recent letter and the current tower height
                         lineHeight: 0,
                         color: fontColor,
                         fontSize: sfSize,
-                        right: '50%',
-                        bottom: '45%',
+                        right: '88%',
+                        bottom: '30%',
                         transform: 'translate(50%,50%)',
                         position: 'absolute',
                     }}>{tower[tower.length - 1] + ' ' + tower.length}</animated.h1>
