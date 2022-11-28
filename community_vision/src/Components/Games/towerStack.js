@@ -96,7 +96,8 @@ const towerStack = forwardRef((props, ref) => {
     const sfSize = size / 3 + 'vh';
     var [startScreen, setStartScreen] = useState(true);
     var [endScreen, setEndScreen] = useState(false);
-
+    
+    //Custom Timeout
     //adapted from sandboxWords
     clearTimeout(t);
     t = setTimeout(function(){
@@ -107,6 +108,9 @@ const towerStack = forwardRef((props, ref) => {
         tower[index] = output;
         }
         setInput('');
+        if(tower.length == 5){
+            setEndScreen(true);
+        }
     }, resetTimer);
 
     resetInputLength(input, setInput);
@@ -118,9 +122,10 @@ const towerStack = forwardRef((props, ref) => {
         evt = evt || window.event;
         if (evt.keyCode === 32) {
             if (startScreen) {
-
             } else if (endScreen) {
-                backToGames();
+                //backToGames();
+                setEndScreen(false);
+                setIndex(0);
             } else {
                 setInput(input + '•');
                 playDot();
@@ -132,6 +137,7 @@ const towerStack = forwardRef((props, ref) => {
                 setStartScreen(false);
             } else if (endScreen) {
                 setEndScreen(false);
+                setIndex(0);
             } else {
                 setInput(input + '-');
                 playDash();
@@ -223,6 +229,59 @@ const towerStack = forwardRef((props, ref) => {
                                                     }
                                                 }}>
                                             Press Enter (dash) to Start
+                                        </button>
+                                    </Card>
+                                </Grid>
+                            </Grid>
+                        </div>
+                        : props => <div />
+                }
+            </Transition>
+            <Transition 
+                items={endScreen}
+                duration={500}
+                from={{ opacity: 0 }}
+                enter={{ opacity: 1 }}
+                leave={{ opacity: 0 }}>
+                {toggle =>
+                    toggle
+                        ? props => <div style={{
+                            position: 'absolute',
+                            width: '100vw',
+                            height: '90vh',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            zIndex: 1,
+                            ...props
+                        }}>
+                            <div style={{
+                                position: 'absolute',
+                                width: '100%',
+                                height: '100%',
+                                backgroundColor: 'black',
+                                opacity: 0.7
+                            }} />
+                            <Grid container direction='column' justify='center' alignItems='center' style={{ height: '100%', width: '100%', zIndex: 1 }}>
+                                <Grid item style={{ userSelect: 'none', cursor: 'default' }}>
+                                    <Card>
+                                        <h1 style={{
+                                            marginBottom: '0vh',
+                                            fontSize: '8vh'
+                                        }}>You completed the tower!
+                                        </h1>
+                                    </Card>
+                                </Grid>
+                                <br />
+                                <Grid item style={{ userSelect: 'none' }}>
+                                    <Card>
+                                        <button id = "start" style={{ fontSize: '8vh', height: '100%', width: '100%', cursor: 'pointer' }}
+                                                onMouseDown={function () {
+                                                    if (endScreen) {
+                                                        setEndScreen(false);
+                                                    }
+                                                }}>
+                                            Press Enter (dash) to Restart
                                         </button>
                                     </Card>
                                 </Grid>
