@@ -108,7 +108,7 @@ const towerStack = forwardRef((props, ref) => {
         tower[index] = output;
         }
         setInput('');
-        if(tower.length == 5){
+        if(tower.length == 5){ //This is where endscreen is triggered
             setEndScreen(true);
         }
     }, resetTimer);
@@ -270,6 +270,7 @@ const towerStack = forwardRef((props, ref) => {
                                             fontSize: '8vh'
                                         }}>You completed the tower!
                                         </h1>
+                                        <br></br>
                                     </Card>
                                 </Grid>
                                 <br />
