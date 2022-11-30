@@ -26,6 +26,11 @@ import {Link} from "react-router-dom";
 
 //Natalie:
 import cheeseTS from './cheeseTS.png' //test image
+import pattyTS from './pattyTS.png'
+import tomatoTS from './tomatoTS.png'
+import bunbottom from './bunbottom.png'
+import buntop from './buntop.png'
+
 
 var textIndex = 0;
 
@@ -177,7 +182,7 @@ const towerStack = forwardRef((props, ref) => {
             gridTemplateAreas: '"top" "middle" "bottom'
         }}>
             <div>
-                <img src={cheeseTS} alt="picture of cheese" />
+                <img src={buntop} alt="picture of top bun of stack" />
             </div>
             <Transition 
                 items={startScreen}
@@ -277,6 +282,8 @@ const towerStack = forwardRef((props, ref) => {
                         minHeight: '90%',
                         display: 'none'
                     }}>{output}</animated.h1>
+                    <img src={buntop} alt="top bun" />
+                    <img src={cheeseTS} alt="picture of cheese" />
 
                     <animated.h1 id="input" style={{ //HIDDEN display of morse input
                         //an attempt to reorganize the screen to get space for the tower
@@ -297,8 +304,9 @@ const towerStack = forwardRef((props, ref) => {
                         transform: 'translate(50%,50%)',
                         position: 'absolute',
                         color: fontColor,
-                        fontSize: tfSize //smaller font slightly for tower 
+                        fontSize: tfSize //smaller font slightly for tower  
                     }}>{output} </animated.h1>
+                    <img src={tomatoTS} alt="picture of tomato" />
 
                     <animated.h1 id="input" style={{ //Display Morse
                         //determines where current morse input should display on screen
@@ -310,6 +318,7 @@ const towerStack = forwardRef((props, ref) => {
                         transform: 'translate(50%,50%)',
                         position: 'absolute',
                     }}>{input}</animated.h1>
+                    <img src={pattyTS} alt="picture of burger patty" /> 
 
                     <animated.h1 id="input" style={{ //HIDDEN Morse
                         //hidden in an attempt to reorganize the screen to get space for the tower
@@ -322,6 +331,7 @@ const towerStack = forwardRef((props, ref) => {
                         position: 'absolute',
                         display: 'none'
                     }}>{input}</animated.h1>
+                    <img src={bunbottom} alt="picture of bottom bun of stack" />
 
                     <animated.h1 id="testing" style={{ //Morse
                         //temporary output to demonstrate adding to array
@@ -334,6 +344,7 @@ const towerStack = forwardRef((props, ref) => {
                         transform: 'translate(50%,50%)',
                         position: 'absolute',
                     }}>{tower[tower.length - 1] + ' ' + tower.length}</animated.h1>
+                
                     </Grid>
                 </div>
             </div>
@@ -347,7 +358,9 @@ const towerStack = forwardRef((props, ref) => {
                 input={input}
                 setInput={setInput}
             />
+
         </div>
+        
     );
 })
 
