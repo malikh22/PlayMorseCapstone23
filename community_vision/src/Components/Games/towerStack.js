@@ -181,9 +181,7 @@ const towerStack = forwardRef((props, ref) => {
             gridTemplate: '8fr 8fr / 1fr',
             gridTemplateAreas: '"top" "middle" "bottom'
         }}>
-            <div>
-                <img src={buntop} alt="picture of top bun of stack" />
-            </div>
+           
             <Transition 
                 items={startScreen}
                 duration={500}
@@ -251,6 +249,7 @@ const towerStack = forwardRef((props, ref) => {
                 }
 
             </Transition>
+            
             <div style={{gridArea: 'top'}}>
                 <div style={{ position: 'absolute' }}>
                     <Container>
@@ -273,7 +272,10 @@ const towerStack = forwardRef((props, ref) => {
                     </Container>
                 </div>
                 <div>
+                    <div>
+                    <img src={buntop} alt="top bun" />
 
+                    </div>
                     <animated.h1 id = "output" style={{ //HIDDEN display of character
                         //Hid all three of these to create space for the towers
                         lineHeight: 0,
@@ -282,7 +284,7 @@ const towerStack = forwardRef((props, ref) => {
                         minHeight: '90%',
                         display: 'none'
                     }}>{output}</animated.h1>
-                    <img src={buntop} alt="top bun" />
+                 
                     <img src={cheeseTS} alt="picture of cheese" />
 
                     <animated.h1 id="input" style={{ //HIDDEN display of morse input
