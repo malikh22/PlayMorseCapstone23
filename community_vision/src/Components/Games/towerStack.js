@@ -68,6 +68,7 @@ function updateTutorial() {
 var t;
 //tower.push(x) to add to the tower
 var tower = [];
+var burgerList = []; //never will contain anything, just to hold length
 const towerStack = forwardRef((props, ref) => {
     
     //when back button is pushed, return to previous page
@@ -80,6 +81,7 @@ const towerStack = forwardRef((props, ref) => {
     var [index, setIndex] = useState(0);
     tower.length = index;
     var [burgers, setBurgers] = useState(0);
+    burgerList.length = burgers;
     var burgerIds = ['burger1','burger2', 'burger3', 'burger4', 'burger5'];
 
     var [input, setInput] = React.useState('');  //checks when tower updates
@@ -120,25 +122,13 @@ const towerStack = forwardRef((props, ref) => {
         //update tower
         tower[index] = output;
         }
-        setInput('');/* 
-        if(burgers == 4){
-            if(tower.length == 5){
-            document.getElementById(burgerIds[5]).style.visibility = "visible";
-            setEndScreen2(true);
-            ;
-            setBurgers(0);
-            tower.length = 0;
-            }
-        } */
+        setInput('');
         if(tower.length == 5){ //This is where endscreen is triggered
-            if(burgers == 4){ //check endscreen 2 
-                document.getElementById(burgerIds[5]).style.visibility = "visible";
+            if(burgerList.length == 4){ //check endscreen 2 
+                document.getElementById('burger5').style.visibility = "visible";
                 setEndScreen2(true);
                 setBurgers(0);
                 setIndex(0);
-                for(let i = 1; i <= 5; i++){
-                    document.getElementById(burgerIds[i]).style.visibility = "hidden";
-                }
             } else {
                 setEndScreen(true);
                 setIndex(0);
@@ -166,6 +156,10 @@ const towerStack = forwardRef((props, ref) => {
                 setEndScreen2(false);
                 setEndScreen(false);
                 setIndex(0);
+                setBurgers(0);
+                for(let i = 0; i < 5; i++){
+                    document.getElementById(burgerIds[i]).style.visibility = "hidden";
+                }
             } else {
                 setInput(input + '•');
                 playDot();
@@ -175,13 +169,17 @@ const towerStack = forwardRef((props, ref) => {
         } else if (evt.keyCode === 13) {
             if (startScreen) { //generalized so both keys start game
                 setStartScreen(false);
-            } else if (endScreen || endScreen2) {
+            } else if (endScreen) {
                 setEndScreen(false);
                 setIndex(0);
             } else if (endScreen2){
                 setEndScreen2(false);
                 setEndScreen(false);
                 setIndex(0);
+                setBurgers(0);
+                for(let i = 0; i < 5; i++){
+                    document.getElementById(burgerIds[i]).style.visibility = "hidden";
+                }
             } else {
                 setInput(input + '-');
                 playDash();
@@ -313,13 +311,13 @@ const towerStack = forwardRef((props, ref) => {
                                 backgroundColor: 'black',
                                 opacity: 0.7
                             }} />
-                            <Grid container direction='column' justify='center' alignItems='center' style={{ height: '100%', width: '100%', zIndex: 2 }}>
+                            <Grid container direction='column' justify='center' alignItems='center' style={{ height: '100%', width: '100%', zIndex: 1 }}>
                                 <Grid item style={{ userSelect: 'none', cursor: 'default' }}>
                                     <Card>
-                                        <h1 style={{ 
+                                        <h1 style={{
                                             marginBottom: '0vh',
                                             fontSize: '8vh'
-                                        }}>You made all five burgers!
+                                        }}>You completed all five burgers!
                                         </h1>
                                         <br></br>
                                     </Card>
@@ -329,7 +327,7 @@ const towerStack = forwardRef((props, ref) => {
                                     <Card>
                                         <button id = "end2" style={{ fontSize: '8vh', height: '100%', width: '100%', cursor: 'pointer' }}
                                                 onMouseDown={function () {
-                                                    if (endScreen2) {                                     
+                                                    if (endScreen2) {                      
                                                         setIndex(0);
                                                         setBurgers(0);
                                                         setEndScreen2(false);
@@ -344,6 +342,7 @@ const towerStack = forwardRef((props, ref) => {
                         : props => <div />
                 }
             </Transition>
+            
             <Transition 
                 items={endScreen /* EndScreen - burger finished */}
                 duration={500}
@@ -561,7 +560,7 @@ const RadioContent = () => {
         <div className="radiocontent" >
             <a href="#" alt="Home">
             </a>
-            <p id="tutorialText" value="Change Text">Welcome to the Tower Stack game!</p>
+            <p id="tutorialText" value="Change Text">Welcome to the Burger Stack game!</p>
             <img src={spacebar} alt="Spacebar" id="spaceImage" style={{ display: "none" }}></img>
             <img src={enterButton} alt="Enter Button" id="enterImage" style={{ display: "none" }}></img>
             <button onClick={function () {
