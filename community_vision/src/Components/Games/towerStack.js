@@ -79,7 +79,7 @@ const towerStack = forwardRef((props, ref) => {
     //using index to manage array length helps manage reset on page out
     var [index, setIndex] = useState(0);
     tower.length = index;
-    var [burgers, setBurgers] = useState(3);
+    var [burgers, setBurgers] = useState(0);
     var burgerIds = ['burger1','burger2', 'burger3', 'burger4', 'burger5'];
 
     var [input, setInput] = React.useState('');  //checks when tower updates
