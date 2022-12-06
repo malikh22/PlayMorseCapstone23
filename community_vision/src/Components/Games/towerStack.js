@@ -107,8 +107,8 @@ const towerStack = forwardRef((props, ref) => {
     const tfSize = (size - 7) + "vh"; //slightly smaller for sake of tower
     const sfSize = size / 3 + 'vh';  //size comes from settings page value
     var [startScreen, setStartScreen] = useState(true);
-    var [endScreen, setEndScreen] = useState(false);
-    var [endScreen2, setEndScreen2] = useState(false);
+    var [endScreen, setEndScreen] = useState(false); //burger completion
+    var [endScreen2, setEndScreen2] = useState(false); //5 burgers completed
 
     //Custom Timeout
     //adapted from sandboxWords
@@ -131,11 +131,14 @@ const towerStack = forwardRef((props, ref) => {
             }
         } */
         if(tower.length == 5){ //This is where endscreen is triggered
-            if(burgers == 4){
+            if(burgers == 4){ //check endscreen 2 
                 document.getElementById(burgerIds[5]).style.visibility = "visible";
                 setEndScreen2(true);
                 setBurgers(0);
                 setIndex(0);
+                for(let i = 1; i <= 5; i++){
+                    document.getElementById(burgerIds[i]).style.visibility = "hidden";
+                }
             } else {
                 setEndScreen(true);
                 setIndex(0);
@@ -170,11 +173,10 @@ const towerStack = forwardRef((props, ref) => {
             }
 
         } else if (evt.keyCode === 13) {
-            if (startScreen) {
+            if (startScreen) { //generalized so both keys start game
                 setStartScreen(false);
             } else if (endScreen || endScreen2) {
                 setEndScreen(false);
-                setEndScreen2(false);
                 setIndex(0);
             } else if (endScreen2){
                 setEndScreen2(false);
@@ -287,7 +289,7 @@ const towerStack = forwardRef((props, ref) => {
 
             </Transition>
             <Transition 
-                items={endScreen2}
+                items={endScreen2 /* EndScreen2 - 5 burgers complete (not working) */}
                 duration={500}
                 from={{ opacity: 0 }}
                 enter={{ opacity: 1 }}
@@ -314,7 +316,7 @@ const towerStack = forwardRef((props, ref) => {
                             <Grid container direction='column' justify='center' alignItems='center' style={{ height: '100%', width: '100%', zIndex: 2 }}>
                                 <Grid item style={{ userSelect: 'none', cursor: 'default' }}>
                                     <Card>
-                                        <h1 style={{
+                                        <h1 style={{ 
                                             marginBottom: '0vh',
                                             fontSize: '8vh'
                                         }}>You made all five burgers!
@@ -331,9 +333,6 @@ const towerStack = forwardRef((props, ref) => {
                                                         setIndex(0);
                                                         setBurgers(0);
                                                         setEndScreen2(false);
-                                                        for(let i = 1; i <= 5; i++){
-                                                            document.getElementById(burgerIds[i]).style.visibility = "hidden";
-                                                        }
                                                     }
                                                 }}>
                                             Press any key to restart the game
@@ -346,7 +345,7 @@ const towerStack = forwardRef((props, ref) => {
                 }
             </Transition>
             <Transition 
-                items={endScreen}
+                items={endScreen /* EndScreen - burger finished */}
                 duration={500}
                 from={{ opacity: 0 }}
                 enter={{ opacity: 1 }}
