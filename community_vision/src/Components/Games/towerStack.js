@@ -30,7 +30,7 @@ import pattyTS from './pattyTS.png'
 import tomatoTS from './tomatoTS.png'
 import bunbottom from './bunbottom.png'
 import buntop from './buntop.png'
-
+import burgerIcon from './burgerIcon.png' //for side display
 
 var textIndex = 0;
 
@@ -68,7 +68,6 @@ function updateTutorial() {
 var t;
 //tower.push(x) to add to the tower
 var tower = [];
-
 const towerStack = forwardRef((props, ref) => {
     
     //when back button is pushed, return to previous page
@@ -80,6 +79,8 @@ const towerStack = forwardRef((props, ref) => {
     //using index to manage array length helps manage reset on page out
     var [index, setIndex] = useState(0);
     tower.length = index;
+    var [burgers, setBurgers] = useState(3);
+    var burgerIds = ['burger1','burger2', 'burger3', 'burger4', 'burger5'];
 
     var [input, setInput] = React.useState('');  //checks when tower updates
     var output = morseToChar(input);  //converts morse into char
@@ -107,7 +108,8 @@ const towerStack = forwardRef((props, ref) => {
     const sfSize = size / 3 + 'vh';  //size comes from settings page value
     var [startScreen, setStartScreen] = useState(true);
     var [endScreen, setEndScreen] = useState(false);
-    
+    var [endScreen2, setEndScreen2] = useState(false);
+
     //Custom Timeout
     //adapted from sandboxWords
     clearTimeout(t);
@@ -118,9 +120,29 @@ const towerStack = forwardRef((props, ref) => {
         //update tower
         tower[index] = output;
         }
-        setInput('');
+        setInput('');/* 
+        if(burgers == 4){
+            if(tower.length == 5){
+            document.getElementById(burgerIds[5]).style.visibility = "visible";
+            setEndScreen2(true);
+            ;
+            setBurgers(0);
+            tower.length = 0;
+            }
+        } */
         if(tower.length == 5){ //This is where endscreen is triggered
-            setEndScreen(true);
+            if(burgers == 4){
+                document.getElementById(burgerIds[5]).style.visibility = "visible";
+                setEndScreen2(true);
+                setBurgers(0);
+                setIndex(0);
+            } else {
+                setEndScreen(true);
+                setIndex(0);
+                setBurgers(prevState => prevState + 1);
+                document.getElementById(burgerIds[burgers]).style.visibility = "visible";
+             
+            }
         }
     }, resetTimer);
 
@@ -133,8 +155,12 @@ const towerStack = forwardRef((props, ref) => {
         evt = evt || window.event;
         if (evt.keyCode === 32) {
             if (startScreen) {
-            } else if (endScreen) {
-                //backToGames();
+                setStartScreen(false);
+            } else if (endScreen ) {
+                setEndScreen(false);
+                setIndex(0);
+            } else if (endScreen2){
+                setEndScreen2(false);
                 setEndScreen(false);
                 setIndex(0);
             } else {
@@ -146,7 +172,12 @@ const towerStack = forwardRef((props, ref) => {
         } else if (evt.keyCode === 13) {
             if (startScreen) {
                 setStartScreen(false);
-            } else if (endScreen) {
+            } else if (endScreen || endScreen2) {
+                setEndScreen(false);
+                setEndScreen2(false);
+                setIndex(0);
+            } else if (endScreen2){
+                setEndScreen2(false);
                 setEndScreen(false);
                 setIndex(0);
             } else {
@@ -179,6 +210,7 @@ const towerStack = forwardRef((props, ref) => {
     )
 
     return (
+        
         <div style={{
             backgroundColor: backgroundColor,
             height: '90vh',
@@ -187,9 +219,6 @@ const towerStack = forwardRef((props, ref) => {
             gridTemplate: '8fr 8fr / 1fr',
             gridTemplateAreas: '"top" "middle" "bottom'
         }}>
-            <div>
-                <img src={buntop} alt="picture of top bun of stack" />
-            </div>
             <Transition 
                 items={startScreen}
                 duration={500}
@@ -224,7 +253,7 @@ const towerStack = forwardRef((props, ref) => {
                                             //title of game
                                             marginBottom: '0vh',
                                             fontSize: '8vh'
-                                        }}>Tower Stack
+                                        }}>Burger Stack
                                         </h1>
                                         <br />
                                         <p style={{
@@ -233,7 +262,7 @@ const towerStack = forwardRef((props, ref) => {
                                             paddingLeft: '2vw',
                                             paddingRight: '2vw',
                                             fontSize: '4vh'
-                                        }}>Type any Morse combination to add a letter to the stack.
+                                        }}>Type any Morse combination to add a letter to the burger.
                                         </p>
                                     </Card>
                                 </Grid>
@@ -247,7 +276,7 @@ const towerStack = forwardRef((props, ref) => {
                                                         setStartScreen(false);
                                                     }
                                                 }}>
-                                            Press Enter (dash) to Start
+                                            Press any key to start
                                         </button>
                                     </Card>
                                 </Grid>
@@ -256,6 +285,65 @@ const towerStack = forwardRef((props, ref) => {
                         : props => <div />
                 }
 
+            </Transition>
+            <Transition 
+                items={endScreen2}
+                duration={500}
+                from={{ opacity: 0 }}
+                enter={{ opacity: 1 }}
+                leave={{ opacity: 0 }}>
+                {toggle =>
+                    toggle
+                        ? props => <div style={{
+                            position: 'absolute',
+                            width: '100vw',
+                            height: '90vh',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            zIndex: 1,
+                            ...props
+                        }}>
+                            <div style={{
+                                position: 'absolute',
+                                width: '100%',
+                                height: '100%',
+                                backgroundColor: 'black',
+                                opacity: 0.7
+                            }} />
+                            <Grid container direction='column' justify='center' alignItems='center' style={{ height: '100%', width: '100%', zIndex: 2 }}>
+                                <Grid item style={{ userSelect: 'none', cursor: 'default' }}>
+                                    <Card>
+                                        <h1 style={{
+                                            marginBottom: '0vh',
+                                            fontSize: '8vh'
+                                        }}>You made all five burgers!
+                                        </h1>
+                                        <br></br>
+                                    </Card>
+                                </Grid>
+                                <br />
+                                <Grid item style={{ userSelect: 'none' }}>
+                                    <Card>
+                                        <button id = "end2" style={{ fontSize: '8vh', height: '100%', width: '100%', cursor: 'pointer' }}
+                                                onMouseDown={function () {
+                                                    if (endScreen2) {                                     
+                                                        setIndex(0);
+                                                        setBurgers(0);
+                                                        setEndScreen2(false);
+                                                        for(let i = 1; i <= 5; i++){
+                                                            document.getElementById(burgerIds[i]).style.visibility = "hidden";
+                                                        }
+                                                    }
+                                                }}>
+                                            Press any key to restart the game
+                                        </button>
+                                    </Card>
+                                </Grid>
+                            </Grid>
+                        </div>
+                        : props => <div />
+                }
             </Transition>
             <Transition 
                 items={endScreen}
@@ -288,7 +376,7 @@ const towerStack = forwardRef((props, ref) => {
                                         <h1 style={{
                                             marginBottom: '0vh',
                                             fontSize: '8vh'
-                                        }}>You completed the tower!
+                                        }}>You completed the burger!
                                         </h1>
                                         <br></br>
                                     </Card>
@@ -296,13 +384,14 @@ const towerStack = forwardRef((props, ref) => {
                                 <br />
                                 <Grid item style={{ userSelect: 'none' }}>
                                     <Card>
-                                        <button id = "start" style={{ fontSize: '8vh', height: '100%', width: '100%', cursor: 'pointer' }}
+                                        <button id = "end" style={{ fontSize: '8vh', height: '100%', width: '100%', cursor: 'pointer' }}
                                                 onMouseDown={function () {
-                                                    if (endScreen) {
+                                                    if (endScreen) {                      
+                                                        setIndex(0);
                                                         setEndScreen(false);
                                                     }
                                                 }}>
-                                            Press Enter (dash) to Restart
+                                            Press any key to make more
                                         </button>
                                     </Card>
                                 </Grid>
@@ -332,6 +421,15 @@ const towerStack = forwardRef((props, ref) => {
                         </Grid>
                     </Container>
                 </div>
+
+                <Grid container direction='row'  position= 'relative' style={{ zIndex: 10, display: 'flex', justifyContent: 'right', alignItems: 'right',}}>
+                    <img src={burgerIcon} id = "burger5" alt="burger icon" style = {{ width:'80px', height:'80px', visibility: 'hidden'}} />
+                    <img src={burgerIcon} id = "burger4" alt="burger icon" style = {{ width:'80px', height:'80px', visibility: 'hidden'}} />
+                    <img src={burgerIcon} id = "burger3" alt="burger icon" style = {{ width:'80px', height:'80px', visibility: 'hidden'}} />
+                    <img src={burgerIcon} id = "burger2" alt="burger icon" style = {{ width:'80px', height:'80px', visibility: 'hidden'}} />
+                    <img src={burgerIcon} id = "burger1" alt="burger icon" style = {{ width:'80px', height:'80px', visibility: 'hidden'}} />
+                </Grid>
+
                 <div>
 
                     <animated.h1 id = "output" style={{ //HIDDEN display of character
@@ -342,8 +440,8 @@ const towerStack = forwardRef((props, ref) => {
                         minHeight: '90%',
                         display: 'none'
                     }}>{output}</animated.h1>
-                    <img src={buntop} alt="top bun" />
-                    <img src={cheeseTS} alt="picture of cheese" />
+                    <img src={buntop} alt="top bun" position= 'relative' />
+                    <img src={cheeseTS} alt="picture of cheese" position= 'relative' />
 
                     <animated.h1 id="input" style={{ //HIDDEN display of morse input
                         //an attempt to reorganize the screen to get space for the tower
@@ -353,9 +451,8 @@ const towerStack = forwardRef((props, ref) => {
                         display: 'none'
                     }}>{input}</animated.h1>
                 </div>
-
                 <div>
-                    <Grid container direction='column' justify-content='center' alignItems='center' style={{ height: '100%', width: '100%', zIndex: 2 }}>
+                    <Grid container direction='column' justify-content='center' position= 'relative' alignItems='center' style={{ height: '100%', width: '100%', zIndex: 2 }}>
                     <animated.h1 id = "output" style={{ //Display Letter
                         //determine where current letter should display on screen
                         lineHeight: 0,
@@ -368,7 +465,7 @@ const towerStack = forwardRef((props, ref) => {
                     }}>{output} </animated.h1>
                     <img src={tomatoTS} alt="picture of tomato" />
 
-                    <animated.h1 id="input" style={{ //Display Morse
+                    <animated.h1 id="input" position= 'relative' style={{ //Display Morse
                         //determines where current morse input should display on screen
                         lineHeight: 0,
                         color: fontColor,
@@ -380,7 +477,7 @@ const towerStack = forwardRef((props, ref) => {
                     }}>{input}</animated.h1>
                     <img src={pattyTS} alt="picture of burger patty" /> 
 
-                    <animated.h1 id="input" style={{ //HIDDEN Morse
+                    <animated.h1 id="input" sposition= 'relative' tyle={{ //HIDDEN Morse
                         //hidden in an attempt to reorganize the screen to get space for the tower
                         lineHeight: 0,
                         color: fontColor,
@@ -403,7 +500,7 @@ const towerStack = forwardRef((props, ref) => {
                         bottom: '30%',
                         transform: 'translate(50%,50%)',
                         position: 'absolute',
-                    }}>{tower[tower.length - 1] + ' ' + tower.length}</animated.h1>
+                    }}>{tower[tower.length - 1] + ' ' + tower.length + ' ' + burgers}</animated.h1>
                 
                     </Grid>
                 </div>
