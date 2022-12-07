@@ -2,9 +2,9 @@
 Tower Stack
 Main game file - in progress
 
-@Author: Emily, Natalie, Aron
+@Author: Emily Hoppe, Natalie Tashchuk
 Created: 10/12/22
-Updated: 11/13/22
+Updated: 11/13/22, 11/23/22,
 */
 
 import React, { useState, forwardRef, useImperativeHandle } from 'react';
@@ -23,6 +23,14 @@ import {Transition} from "react-spring/renderprops";
 import Card from "@material-ui/core/Card";
 import {useHistory} from "react-router-dom";
 import {Link} from "react-router-dom";
+
+//Natalie:
+import cheeseTS from './cheeseTS.png' //test image
+import pattyTS from './pattyTS.png'
+import tomatoTS from './tomatoTS.png'
+import bunbottom from './bunbottom.png'
+import buntop from './buntop.png'
+import burgerIcon from './burgerIcon.png' //for side display
 
 var textIndex = 0;
 
@@ -60,9 +68,10 @@ function updateTutorial() {
 var t;
 //tower.push(x) to add to the tower
 var tower = [];
-
+var burgerList = []; //never will contain anything, just to hold length
 const towerStack = forwardRef((props, ref) => {
     
+    //when back button is pushed, return to previous page
     const history = useHistory();
     function backToGames() {
         history.push("/GamesThemes");
@@ -71,9 +80,14 @@ const towerStack = forwardRef((props, ref) => {
     //using index to manage array length helps manage reset on page out
     var [index, setIndex] = useState(0);
     tower.length = index;
+    var [burgers, setBurgers] = useState(0);
+    burgerList.length = burgers;
+    var burgerIds = ['burger1','burger2', 'burger3', 'burger4', 'burger5'];
 
-    var [input, setInput] = React.useState('');
-    var output = morseToChar(input);
+    var [input, setInput] = React.useState('');  //checks when tower updates
+    var output = morseToChar(input);  //converts morse into char
+
+    //setup stuff:
     const [volume, setVolume] = useState(() => initial('volume'));
     const [size, setSize] = useState(() => initial('size'));
     const [speed, setSpeed] = useState(() => initial('speed'));
@@ -93,10 +107,12 @@ const towerStack = forwardRef((props, ref) => {
     );
     const fSize = size + 'vh';
     const tfSize = (size - 7) + "vh"; //slightly smaller for sake of tower
-    const sfSize = size / 3 + 'vh';
+    const sfSize = size / 3 + 'vh';  //size comes from settings page value
     var [startScreen, setStartScreen] = useState(true);
-    var [endScreen, setEndScreen] = useState(false);
+    var [endScreen, setEndScreen] = useState(false); //burger completion
+    var [endScreen2, setEndScreen2] = useState(false); //5 burgers completed
 
+    //Custom Timeout
     //adapted from sandboxWords
     clearTimeout(t);
     t = setTimeout(function(){
@@ -107,6 +123,20 @@ const towerStack = forwardRef((props, ref) => {
         tower[index] = output;
         }
         setInput('');
+        if(tower.length == 5){ //This is where endscreen is triggered
+            if(burgerList.length == 4){ //check endscreen 2 
+                document.getElementById('burger5').style.visibility = "visible";
+                setEndScreen2(true);
+                setBurgers(0);
+                setIndex(0);
+            } else {
+                setEndScreen(true);
+                setIndex(0);
+                setBurgers(prevState => prevState + 1);
+                document.getElementById(burgerIds[burgers]).style.visibility = "visible";
+             
+            }
+        }
     }, resetTimer);
 
     resetInputLength(input, setInput);
@@ -118,9 +148,18 @@ const towerStack = forwardRef((props, ref) => {
         evt = evt || window.event;
         if (evt.keyCode === 32) {
             if (startScreen) {
-
-            } else if (endScreen) {
-                backToGames();
+                setStartScreen(false);
+            } else if (endScreen ) {
+                setEndScreen(false);
+                setIndex(0);
+            } else if (endScreen2){
+                setEndScreen2(false);
+                setEndScreen(false);
+                setIndex(0);
+                setBurgers(0);
+                for(let i = 0; i < 5; i++){
+                    document.getElementById(burgerIds[i]).style.visibility = "hidden";
+                }
             } else {
                 setInput(input + '•');
                 playDot();
@@ -128,10 +167,19 @@ const towerStack = forwardRef((props, ref) => {
             }
 
         } else if (evt.keyCode === 13) {
-            if (startScreen) {
+            if (startScreen) { //generalized so both keys start game
                 setStartScreen(false);
             } else if (endScreen) {
                 setEndScreen(false);
+                setIndex(0);
+            } else if (endScreen2){
+                setEndScreen2(false);
+                setEndScreen(false);
+                setIndex(0);
+                setBurgers(0);
+                for(let i = 0; i < 5; i++){
+                    document.getElementById(burgerIds[i]).style.visibility = "hidden";
+                }
             } else {
                 setInput(input + '-');
                 playDash();
@@ -162,6 +210,7 @@ const towerStack = forwardRef((props, ref) => {
     )
 
     return (
+        
         <div style={{
             backgroundColor: backgroundColor,
             height: '90vh',
@@ -172,6 +221,73 @@ const towerStack = forwardRef((props, ref) => {
         }}>
             <Transition 
                 items={startScreen}
+                duration={500}
+                from={{ opacity: 0 }}
+                enter={{ opacity: 1 }}
+                leave={{ opacity: 0 }}>
+                {toggle =>
+                    toggle
+                        ? props => <div style={{
+                            position: 'absolute',
+                            width: '100vw',
+                            height: '90vh',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            zIndex: 1,
+                            ...props
+                        }}>
+                            <div id='startmenu' style={{
+                                //this div is the starting text that introduces the game
+                                position: 'absolute',
+                                width: '100%',
+                                height: '100%',
+                                backgroundColor: 'black',
+                                opacity: 0.7
+                            }} />
+                        
+                            <Grid container direction='column' justify='center' alignItems='center' style={{ height: '100%', width: '100%', zIndex: 1 }}>
+                                <Grid item style={{ userSelect: 'none', cursor: 'default' }}>
+                                    <Card>
+                                        <h1 style={{
+                                            //title of game
+                                            marginBottom: '0vh',
+                                            fontSize: '8vh'
+                                        }}>Burger Stack
+                                        </h1>
+                                        <br />
+                                        <p style={{
+                                            //game instructions
+                                            marginTop: '0vh',
+                                            paddingLeft: '2vw',
+                                            paddingRight: '2vw',
+                                            fontSize: '4vh'
+                                        }}>Type any Morse combination to add a letter to the burger.
+                                        </p>
+                                    </Card>
+                                </Grid>
+                                <br />
+                                <Grid item style={{ userSelect: 'none' }}>
+                                    <Card>
+                                        <button id = "start" style={{ fontSize: '8vh', height: '100%', width: '100%', cursor: 'pointer' }}
+                                                //start button 
+                                                onMouseDown={function () {
+                                                    if (startScreen) {
+                                                        setStartScreen(false);
+                                                    }
+                                                }}>
+                                            Press any key to start
+                                        </button>
+                                    </Card>
+                                </Grid>
+                            </Grid>
+                        </div>
+                        : props => <div />
+                }
+
+            </Transition>
+            <Transition 
+                items={endScreen2 /* EndScreen2 - 5 burgers complete (not working) */}
                 duration={500}
                 from={{ opacity: 0 }}
                 enter={{ opacity: 1 }}
@@ -201,28 +317,79 @@ const towerStack = forwardRef((props, ref) => {
                                         <h1 style={{
                                             marginBottom: '0vh',
                                             fontSize: '8vh'
-                                        }}>Tower Stack
+                                        }}>You completed all five burgers!
                                         </h1>
-                                        <br />
-                                        <p style={{
-                                            marginTop: '0vh',
-                                            paddingLeft: '2vw',
-                                            paddingRight: '2vw',
-                                            fontSize: '4vh'
-                                        }}>Type any Morse combination to add a letter to the stack.
-                                        </p>
+                                        <br></br>
                                     </Card>
                                 </Grid>
                                 <br />
                                 <Grid item style={{ userSelect: 'none' }}>
                                     <Card>
-                                        <button id = "start" style={{ fontSize: '8vh', height: '100%', width: '100%', cursor: 'pointer' }}
+                                        <button id = "end2" style={{ fontSize: '8vh', height: '100%', width: '100%', cursor: 'pointer' }}
                                                 onMouseDown={function () {
-                                                    if (startScreen) {
-                                                        setStartScreen(false);
+                                                    if (endScreen2) {                      
+                                                        setIndex(0);
+                                                        setBurgers(0);
+                                                        setEndScreen2(false);
                                                     }
                                                 }}>
-                                            Press Enter (dash) to Start
+                                            Press any key to restart the game
+                                        </button>
+                                    </Card>
+                                </Grid>
+                            </Grid>
+                        </div>
+                        : props => <div />
+                }
+            </Transition>
+            
+            <Transition 
+                items={endScreen /* EndScreen - burger finished */}
+                duration={500}
+                from={{ opacity: 0 }}
+                enter={{ opacity: 1 }}
+                leave={{ opacity: 0 }}>
+                {toggle =>
+                    toggle
+                        ? props => <div style={{
+                            position: 'absolute',
+                            width: '100vw',
+                            height: '90vh',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            zIndex: 1,
+                            ...props
+                        }}>
+                            <div style={{
+                                position: 'absolute',
+                                width: '100%',
+                                height: '100%',
+                                backgroundColor: 'black',
+                                opacity: 0.7
+                            }} />
+                            <Grid container direction='column' justify='center' alignItems='center' style={{ height: '100%', width: '100%', zIndex: 1 }}>
+                                <Grid item style={{ userSelect: 'none', cursor: 'default' }}>
+                                    <Card>
+                                        <h1 style={{
+                                            marginBottom: '0vh',
+                                            fontSize: '8vh'
+                                        }}>You completed the burger!
+                                        </h1>
+                                        <br></br>
+                                    </Card>
+                                </Grid>
+                                <br />
+                                <Grid item style={{ userSelect: 'none' }}>
+                                    <Card>
+                                        <button id = "end" style={{ fontSize: '8vh', height: '100%', width: '100%', cursor: 'pointer' }}
+                                                onMouseDown={function () {
+                                                    if (endScreen) {                      
+                                                        setIndex(0);
+                                                        setEndScreen(false);
+                                                    }
+                                                }}>
+                                            Press any key to make more
                                         </button>
                                     </Card>
                                 </Grid>
@@ -238,6 +405,7 @@ const towerStack = forwardRef((props, ref) => {
                             <Grid item>
                                 <Link className='nav-link' to="/GamesThemes">
                                     <button style={{
+                                        //back button
                                         height: '90%',
                                         width: '100%',
                                         fontSize: '4vh',
@@ -251,18 +419,29 @@ const towerStack = forwardRef((props, ref) => {
                         </Grid>
                     </Container>
                 </div>
+
+                <Grid container direction='row'  position= 'relative' style={{ zIndex: 10, display: 'flex', justifyContent: 'right', alignItems: 'right',}}>
+                    <img src={burgerIcon} id = "burger5" alt="burger icon" style = {{ width:'80px', height:'80px', visibility: 'hidden'}} />
+                    <img src={burgerIcon} id = "burger4" alt="burger icon" style = {{ width:'80px', height:'80px', visibility: 'hidden'}} />
+                    <img src={burgerIcon} id = "burger3" alt="burger icon" style = {{ width:'80px', height:'80px', visibility: 'hidden'}} />
+                    <img src={burgerIcon} id = "burger2" alt="burger icon" style = {{ width:'80px', height:'80px', visibility: 'hidden'}} />
+                    <img src={burgerIcon} id = "burger1" alt="burger icon" style = {{ width:'80px', height:'80px', visibility: 'hidden'}} />
+                </Grid>
+
                 <div>
 
-                    <animated.h1 id = "output" style={{ //Letter
-            //Hid all three of these to create space for the towers
+                    <animated.h1 id = "output" style={{ //HIDDEN display of character
+                        //Hid all three of these to create space for the towers
                         lineHeight: 0,
                         color: fontColor,
                         fontSize: tfSize, //smaller font slightly for tower 
                         minHeight: '90%',
                         display: 'none'
                     }}>{output}</animated.h1>
+                    <img src={buntop} alt="top bun" position= 'relative' />
+                    <img src={cheeseTS} alt="picture of cheese" position= 'relative' />
 
-                    <animated.h1 id="input" style={{ //Morse
+                    <animated.h1 id="input" style={{ //HIDDEN display of morse input
                         //an attempt to reorganize the screen to get space for the tower
                         lineHeight: 0,
                         color: fontColor,
@@ -271,46 +450,56 @@ const towerStack = forwardRef((props, ref) => {
                     }}>{input}</animated.h1>
                 </div>
                 <div>
-                    <Grid container direction='column' justify-content='center' alignItems='center' style={{ height: '100%', width: '100%', zIndex: 2 }}>
-                    <animated.h1 id = "output" style={{ //Letter
+                    <Grid container direction='column' justify-content='center' position= 'relative' alignItems='center' style={{ height: '100%', width: '100%', zIndex: 2 }}>
+                    <animated.h1 id = "output" style={{ //Display Letter
+                        //determine where current letter should display on screen
                         lineHeight: 0,
                         right: '50%',
-                        bottom: '50%',
+                        bottom: '60%',
                         transform: 'translate(50%,50%)',
                         position: 'absolute',
                         color: fontColor,
-                        fontSize: tfSize //smaller font slightly for tower 
-                    }}>{output}</animated.h1>
-                    <animated.h1 id="input" style={{ //Morse
-                        //an attempt to reorganize the screen to get space for the tower
-                        lineHeight: 0,
-                        color: fontColor,
-                        fontSize: sfSize,
-                        right: '50%',
-                        bottom: '45%',
-                        transform: 'translate(50%,50%)',
-                        position: 'absolute',
-                    }}>{input}</animated.h1>
-                    <animated.h1 id="input" style={{ //Morse
-                        //an attempt to reorganize the screen to get space for the tower
+                        fontSize: tfSize //smaller font slightly for tower  
+                    }}>{output} </animated.h1>
+                    <img src={tomatoTS} alt="picture of tomato" />
+
+                    <animated.h1 id="input" position= 'relative' style={{ //Display Morse
+                        //determines where current morse input should display on screen
                         lineHeight: 0,
                         color: fontColor,
                         fontSize: sfSize,
                         right: '50%',
-                        bottom: '45%',
+                        bottom: '55%',
                         transform: 'translate(50%,50%)',
                         position: 'absolute',
                     }}>{input}</animated.h1>
+                    <img src={pattyTS} alt="picture of burger patty" /> 
+
+                    <animated.h1 id="input" sposition= 'relative' tyle={{ //HIDDEN Morse
+                        //hidden in an attempt to reorganize the screen to get space for the tower
+                        lineHeight: 0,
+                        color: fontColor,
+                        fontSize: sfSize,
+                        right: '80%',
+                        bottom: '45%',
+                        transform: 'translate(50%,50%)',
+                        position: 'absolute',
+                        display: 'none'
+                    }}>{input}</animated.h1>
+                    <img src={bunbottom} alt="picture of bottom bun of stack" />
+
                     <animated.h1 id="testing" style={{ //Morse
-                        //temporary to demonstrate adding to array
+                        //temporary output to demonstrate adding to array
+                        //displays most recent letter and the current tower height
                         lineHeight: 0,
                         color: fontColor,
                         fontSize: sfSize,
-                        right: '50%',
-                        bottom: '45%',
+                        right: '88%',
+                        bottom: '30%',
                         transform: 'translate(50%,50%)',
                         position: 'absolute',
-                    }}>{tower[tower.length - 1] + ' ' + tower.length}</animated.h1>
+                    }}>{tower[tower.length - 1] + ' ' + tower.length + ' ' + burgers}</animated.h1>
+                
                     </Grid>
                 </div>
             </div>
@@ -324,7 +513,9 @@ const towerStack = forwardRef((props, ref) => {
                 input={input}
                 setInput={setInput}
             />
+
         </div>
+        
     );
 })
 
@@ -369,7 +560,7 @@ const RadioContent = () => {
         <div className="radiocontent" >
             <a href="#" alt="Home">
             </a>
-            <p id="tutorialText" value="Change Text">Welcome to the Tower Stack game!</p>
+            <p id="tutorialText" value="Change Text">Welcome to the Burger Stack game!</p>
             <img src={spacebar} alt="Spacebar" id="spaceImage" style={{ display: "none" }}></img>
             <img src={enterButton} alt="Enter Button" id="enterImage" style={{ display: "none" }}></img>
             <button onClick={function () {
