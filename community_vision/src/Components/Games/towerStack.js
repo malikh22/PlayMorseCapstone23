@@ -69,6 +69,7 @@ var t;
 //tower.push(x) to add to the tower
 var tower = [];
 var burgerList = []; //never will contain anything, just to hold length
+var stackHeight = 0; 
 const towerStack = forwardRef((props, ref) => {
     
     //when back button is pushed, return to previous page
@@ -83,6 +84,7 @@ const towerStack = forwardRef((props, ref) => {
     var [burgers, setBurgers] = useState(0);
     burgerList.length = burgers;
     var burgerIds = ['burger1','burger2', 'burger3', 'burger4', 'burger5'];
+    var towerIds = ['stack1', 'stack2', 'stack3', 'stack4', 'stack5']; 
 
     var [input, setInput] = React.useState('');  //checks when tower updates
     var output = morseToChar(input);  //converts morse into char
@@ -121,8 +123,11 @@ const towerStack = forwardRef((props, ref) => {
         setIndex(prevState => prevState + 1); 
         //update tower
         tower[index] = output;
+        document.getElementById(towerIds[stackHeight]).style.visibility = "visible";
+        stackHeight++;
         }
         setInput('');
+
         if(tower.length == 5){ //This is where endscreen is triggered
             if(burgerList.length == 4){ //check endscreen 2 
                 document.getElementById('burger5').style.visibility = "visible";
@@ -134,6 +139,10 @@ const towerStack = forwardRef((props, ref) => {
                 setIndex(0);
                 setBurgers(prevState => prevState + 1);
                 document.getElementById(burgerIds[burgers]).style.visibility = "visible";
+                for (let i = 0; i < 5; i++){
+                    document.getElementById(towerIds[i]).style.visibility = "hidden";
+                }
+           
              
             }
         }
@@ -438,8 +447,14 @@ const towerStack = forwardRef((props, ref) => {
                         minHeight: '90%',
                         display: 'none'
                     }}>{output}</animated.h1>
-                    <img src={buntop} alt="top bun" position= 'relative' />
-                    <img src={cheeseTS} alt="picture of cheese" position= 'relative' />
+                   
+                    <Grid container direction='column'  position= 'relative' style={{ zIndex: 10, display: 'flex', justifyContent: 'center', alignItems: 'center',}}>
+                    <img src={buntop} id = "stack5" alt="burger icon" style = {{ width:'30%', height:'8%', visibility: 'hidden'}} />
+                    <img src={tomatoTS} id = "stack4" alt="burger icon" style = {{ width:'30%', height:'10%', visibility: 'hidden'}} />
+                    <img src={cheeseTS} id = "stack3" alt="burger icon" style = {{ width:'30%', height:'10%', visibility: 'hidden'}} />
+                    <img src={pattyTS} id = "stack2" alt="burger icon" style = {{width:'30%', height:'10%', visibility: 'hidden'}} />
+                    <img src={bunbottom} id = "stack1" alt="bottom bun of burger" style = {{ width:'30%', height:'8%', visibility: 'hidden'}} />
+                </Grid>
 
                     <animated.h1 id="input" style={{ //HIDDEN display of morse input
                         //an attempt to reorganize the screen to get space for the tower
@@ -461,7 +476,6 @@ const towerStack = forwardRef((props, ref) => {
                         color: fontColor,
                         fontSize: tfSize //smaller font slightly for tower  
                     }}>{output} </animated.h1>
-                    <img src={tomatoTS} alt="picture of tomato" />
 
                     <animated.h1 id="input" position= 'relative' style={{ //Display Morse
                         //determines where current morse input should display on screen
@@ -473,7 +487,7 @@ const towerStack = forwardRef((props, ref) => {
                         transform: 'translate(50%,50%)',
                         position: 'absolute',
                     }}>{input}</animated.h1>
-                    <img src={pattyTS} alt="picture of burger patty" /> 
+                 
 
                     <animated.h1 id="input" sposition= 'relative' tyle={{ //HIDDEN Morse
                         //hidden in an attempt to reorganize the screen to get space for the tower
@@ -486,7 +500,7 @@ const towerStack = forwardRef((props, ref) => {
                         position: 'absolute',
                         display: 'none'
                     }}>{input}</animated.h1>
-                    <img src={bunbottom} alt="picture of bottom bun of stack" />
+               
 
                     <animated.h1 id="testing" style={{ //Morse
                         //temporary output to demonstrate adding to array
