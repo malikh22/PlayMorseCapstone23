@@ -123,7 +123,7 @@ const towerStack = forwardRef((props, ref) => {
         setIndex(prevState => prevState + 1); 
         //update tower
         tower[index] = output;
-        document.getElementById(towerIds[stackHeight]).style.visibility = "visible";
+        document.getElementById(towerIds[stackHeight % 5]).style.visibility = "visible";
         stackHeight++;
         }
         setInput('');
@@ -142,8 +142,6 @@ const towerStack = forwardRef((props, ref) => {
                 for (let i = 0; i < 5; i++){
                     document.getElementById(towerIds[i]).style.visibility = "hidden";
                 }
-           
-             
             }
         }
     }, resetTimer);
