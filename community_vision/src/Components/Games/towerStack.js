@@ -137,6 +137,9 @@ const towerStack = forwardRef((props, ref) => {
                 setIndex(0);
                 setBurgers(prevState => prevState + 1);
                 document.getElementById(burgerIds[burgers]).style.visibility = "visible";
+                for (let i = 0; i < 5; i++){
+                    document.getElementById(towerIds[i]).style.visibility = "hidden";
+                }
                 
             }
         }
@@ -322,12 +325,13 @@ const towerStack = forwardRef((props, ref) => {
                                 backgroundColor: 'black',
                                 opacity: 0.7
                             }} />
-                            <Grid container direction='column' justify='center' alignItems='center' style={{ height: '100%', width: '100%', zIndex: 1 }}>
-                                <Grid item style={{ userSelect: 'none', cursor: 'default' }}>
+                            <Grid container direction='column' justify='center' alignItems='center' style={{ height: '100%', width: '100%', zIndex: 18 }}>
+                                <Grid item style={{ userSelect: 'none', cursor: 'default', zIndex:18 }}>
                                     <Card>
                                         <h1 style={{
                                             marginBottom: '0vh',
-                                            fontSize: '8vh'
+                                            fontSize: '8vh',
+                                            zIndex: '18' 
                                         }}>You completed all five burgers!
                                         </h1>
                                         <br></br>
@@ -379,12 +383,13 @@ const towerStack = forwardRef((props, ref) => {
                                 backgroundColor: 'black',
                                 opacity: 0.7
                             }} />
-                            <Grid container direction='column' justify='center' alignItems='center' style={{ height: '100%', width: '100%', zIndex: 1 }}>
-                                <Grid item style={{ userSelect: 'none', cursor: 'default' }}>
+                            <Grid container direction='column' justify='center' alignItems='center' style={{ height: '100%', width: '100%', zIndex: 18 }}>
+                                <Grid item style={{ userSelect: 'none', cursor: 'default', zIndex:18}}>
                                     <Card>
                                         <h1 style={{
                                             marginBottom: '0vh',
-                                            fontSize: '8vh'
+                                            fontSize: '8vh',
+                                            zIndex: '18'
                                         }}>You completed the burger!
                                         </h1>
                                         <br></br>
@@ -451,11 +456,11 @@ const towerStack = forwardRef((props, ref) => {
                     }}>{output}</animated.h1>
                    
                     <Grid container direction='column'  position= 'relative' style={{ zIndex: 10, display: 'flex', justifyContent: 'center', alignItems: 'center',}}>
-                    <img src={buntop} id = "stack5" alt="burger icon" style = {{ width:'30%', height:'8%', visibility: 'hidden', marginTop: '9%', zIndex:15}} />
-                    <img src={tomatoTS} id = "stack4" alt="burger icon" style = {{ width:'30%', height:'10%', visibility: 'hidden', marginTop: '-3%', zIndex:14}} />
-                    <img src={cheeseTS} id = "stack3" alt="burger icon" style = {{ width:'30%', height:'10%', visibility: 'hidden', marginTop: '-3%', zIndex:13}} />
-                    <img src={pattyTS} id = "stack2" alt="burger icon" style = {{width:'30%', height:'10%', visibility: 'hidden', marginTop: '-3%', zIndex:12}} />
-                    <img src={bunbottom} id = "stack1" alt="bottom bun of burger" style = {{ width:'30%', height:'8%', visibility: 'hidden', marginTop: '-3%', zIndex:11}} />
+                    <img src={buntop} id = "stack5" alt="burger icon" style = {{ width:'27%', height:'8%', visibility: 'hidden', marginTop: '9%', zIndex:15}} />
+                    <img src={tomatoTS} id = "stack4" alt="burger icon" style = {{ width:'27%', height:'10%', visibility: 'hidden', marginTop: '-3%', zIndex:14}} />
+                    <img src={cheeseTS} id = "stack3" alt="burger icon" style = {{ width:'27%', height:'10%', visibility: 'hidden', marginTop: '-3%', zIndex:13}} />
+                    <img src={pattyTS} id = "stack2" alt="burger icon" style = {{width:'27%', height:'10%', visibility: 'hidden', marginTop: '-3%', zIndex:12}} />
+                    <img src={bunbottom} id = "stack1" alt="bottom bun of burger" style = {{ width:'27%', height:'8%', visibility: 'hidden', marginTop: '-3%', marginBottom: '-7%', zIndex:11}} />
                 </Grid>
 
                     <animated.h1 id="input" style={{ //HIDDEN display of morse input
