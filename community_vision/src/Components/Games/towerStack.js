@@ -35,7 +35,7 @@ import burgerIcon from './burgerIcon.png' //for side display
 var textIndex = 0;
 
 
-
+//For tutorial mode (probably)
 function updateTutorial() {
     var space = document.getElementById('spaceImage');
     var enter = document.getElementById('enterImage');
@@ -69,6 +69,7 @@ var t;
 //tower.push(x) to add to the tower
 var tower = [];
 var burgerList = []; //never will contain anything, just to hold length bc react is finnicky
+//Main function - returns the html that is the webpage
 const towerStack = forwardRef((props, ref) => {
     
     //when back button is pushed, return to previous page
@@ -78,14 +79,16 @@ const towerStack = forwardRef((props, ref) => {
     }
 
     //using index to manage array length helps manage reset on page out
-    var [index, setIndex] = useState(0);
-    tower.length = index;
-    var [burgers, setBurgers] = useState(0);
-    burgerList.length = burgers;
-    var burgerIds = ['burger1','burger2', 'burger3', 'burger4', 'burger5'];
-    var towerIds = ['stack1', 'stack2', 'stack3', 'stack4', 'stack5']; 
+    var [index, setIndex] = useState(0); //Use state resets on page out automatically
+    tower.length = index; //connects useState to tower's length
+    var [burgers, setBurgers] = useState(0); //same idea but with burger icons
+    burgerList.length = burgers; //array is empty, but had to do this bc react wasn't chill about a normal var
 
-    var [input, setInput] = React.useState('');  //checks when tower updates
+    //Ids of the HTML elements that need to be made visible/invisible
+    var burgerIds = ['burger1','burger2', 'burger3', 'burger4', 'burger5']; //icons
+    var towerIds = ['stack1', 'stack2', 'stack3', 'stack4', 'stack5']; //main burger elements
+
+    var [input, setInput] = React.useState('');  //reads input in morse
     var output = morseToChar(input);  //converts morse into char
 
     //setup stuff:
@@ -110,39 +113,41 @@ const towerStack = forwardRef((props, ref) => {
     const tfSize = (size - 7) + "vh"; //slightly smaller for sake of tower
     const sfSize = size / 3 + 'vh';  //size comes from settings page value
     var [startScreen, setStartScreen] = useState(true);
-    var [endScreen, setEndScreen] = useState(false); //burger completion
+    var [endScreen, setEndScreen] = useState(false); //main burger completion
     var [endScreen2, setEndScreen2] = useState(false); //5 burgers completed
 
     //Custom Timeout
     //adapted from sandboxWords
     clearTimeout(t);
     t = setTimeout(function(){
-        if(output != ' '){
-        //index resets on page  (found ex in 1,2 hit)
-        setIndex(prevState => prevState + 1); 
-        //update tower
-        tower[index] = output;
-        document.getElementById(towerIds[tower.length - 1]).style.visibility = "visible";
+        if(output != ' '){ //only valid morse
+        //index resets on page out (found example in 1,2 hit)
+        setIndex(prevState => prevState + 1); //update tower height
+        tower[index] = output; //update tower
+        document.getElementById(towerIds[tower.length - 1]).style.visibility = "visible"; //make tower element visible
         }
-        setInput('');
+        setInput(''); //reset morse input
 
         if(tower.length == 5){ //This is where endscreen is triggered
-            if(burgerList.length == 4){ //check endscreen 2 
+            if(burgerList.length == 4){ //check endscreen 2 (5 burgers complete)
+                //make sure final elements become visible
                 document.getElementById(towerIds[4]).style.visibility = "visible";
                 document.getElementById('burger5').style.visibility = "visible";
-                setEndScreen2(true);
+                
+                setEndScreen2(true); //trigger endscreen visuals
+
+                //reset vars
                 setBurgers(0);
                 setIndex(0);
             } else {
-                document.getElementById(towerIds[4]).style.visibility = "visible";
-                setEndScreen(true);
-                setIndex(0);
-                setBurgers(prevState => prevState + 1);
-                document.getElementById(burgerIds[burgers]).style.visibility = "visible";
-                /* for (let i = 0; i < 5; i++){
-                    document.getElementById(towerIds[i]).style.visibility = "hidden";
-                } */
+                document.getElementById(towerIds[4]).style.visibility = "visible"; //make sure final element becomes visible
+                setEndScreen(true); //trigger endscreen visuals
                 
+                setIndex(0); //reset stack
+
+                //update burger icons
+                setBurgers(prevState => prevState + 1);
+                document.getElementById(burgerIds[burgers]).style.visibility = "visible"; 
             }
         }
     }, resetTimer);
@@ -154,21 +159,21 @@ const towerStack = forwardRef((props, ref) => {
         if (!handleKeyDown) return; //
         setHandleKeyDown(false); //
         evt = evt || window.event;
-        if (evt.keyCode === 32) {
+        if (evt.keyCode === 32) { //press space
             if (startScreen) {
                 setStartScreen(false);
             } else if (endScreen ) {
-                setEndScreen(false);
-                setIndex(0);
-                for (let i = 0; i < 5; i++){
+                setEndScreen(false); //exit end screen
+                setIndex(0); //reset tower
+                for (let i = 0; i < 5; i++){ //reset tower visuals
                     document.getElementById(towerIds[i]).style.visibility = "hidden";
                 }
             } else if (endScreen2){
-                setEndScreen2(false);
-                setEndScreen(false);
-                setIndex(0);
-                setBurgers(0);
-                for(let i = 0; i < 5; i++){
+                setEndScreen2(false); //exit end screen
+                setEndScreen(false); //make sure other screen wasn't triggered
+                setIndex(0); //reset tower
+                setBurgers(0); //reset icons
+                for(let i = 0; i < 5; i++){ //clear all visuals
                     document.getElementById(burgerIds[i]).style.visibility = "hidden";
                     document.getElementById(towerIds[i]).style.visibility = "hidden";
                 }
@@ -178,7 +183,7 @@ const towerStack = forwardRef((props, ref) => {
                 document.getElementById('dotButton').focus();
             }
 
-        } else if (evt.keyCode === 13) {
+        } else if (evt.keyCode === 13) { //press enter
             if (startScreen) { //generalized so both keys start game
                 setStartScreen(false);
             } else if (endScreen) {
@@ -188,11 +193,11 @@ const towerStack = forwardRef((props, ref) => {
                     document.getElementById(towerIds[i]).style.visibility = "hidden";
                 }
             } else if (endScreen2){
-                setEndScreen2(false);
-                setEndScreen(false);
-                setIndex(0);
-                setBurgers(0);
-                for(let i = 0; i < 5; i++){
+                setEndScreen2(false); //exit end screen
+                setEndScreen(false); //make sure other screen wasn't triggered
+                setIndex(0); //reset tower
+                setBurgers(0); //reset icons
+                for(let i = 0; i < 5; i++){ //clear all visuals
                     document.getElementById(burgerIds[i]).style.visibility = "hidden";
                     document.getElementById(towerIds[i]).style.visibility = "hidden";
                 }
@@ -235,8 +240,8 @@ const towerStack = forwardRef((props, ref) => {
             gridTemplate: '8fr 8fr / 1fr',
             gridTemplateAreas: '"top" "middle" "bottom'
         }}>
-            <Transition 
-                items={startScreen}
+            <Transition //code is originally from sandbox letters, but it's a good model for adding screens
+                items={startScreen} //which screen is it
                 duration={500}
                 from={{ opacity: 0 }}
                 enter={{ opacity: 1 }}
@@ -250,10 +255,10 @@ const towerStack = forwardRef((props, ref) => {
                             display: 'flex',
                             justifyContent: 'center',
                             alignItems: 'center',
-                            zIndex: 1,
+                            zIndex: 1, //controlls how forward it is on the display
                             ...props
                         }}>
-                            <div id='startmenu' style={{
+                            <div id='startmenu' style={{ //visuals
                                 //this div is the starting text that introduces the game
                                 position: 'absolute',
                                 width: '100%',
@@ -287,7 +292,7 @@ const towerStack = forwardRef((props, ref) => {
                                     <Card>
                                         <button id = "start" style={{ fontSize: '8vh', height: '100%', width: '100%', cursor: 'pointer' }}
                                                 //start button 
-                                                onMouseDown={function () {
+                                                onMouseDown={function () { //if the user clicks with the mouse instead of space/enter
                                                     if (startScreen) {
                                                         setStartScreen(false);
                                                     }
@@ -303,7 +308,7 @@ const towerStack = forwardRef((props, ref) => {
 
             </Transition>
             <Transition 
-                items={endScreen2 /* EndScreen2 - 5 burgers complete (not working) */}
+                items={endScreen2 /* EndScreen2 - 5 burgers complete */}
                 duration={500}
                 from={{ opacity: 0 }}
                 enter={{ opacity: 1 }}
@@ -343,7 +348,7 @@ const towerStack = forwardRef((props, ref) => {
                                 <Grid item style={{ userSelect: 'none' }}>
                                     <Card>
                                         <button id = "end2" style={{ fontSize: '8vh', height: '100%', width: '100%', cursor: 'pointer' }}
-                                                onMouseDown={function () {
+                                                onMouseDown={function () { //same code as space/enter
                                                     if (endScreen2) { 
                                                         setIndex(0);
                                                         setBurgers(0);
@@ -406,7 +411,7 @@ const towerStack = forwardRef((props, ref) => {
                                 <Grid item style={{ userSelect: 'none' }}>
                                     <Card>
                                         <button id = "end" style={{ fontSize: '8vh', height: '100%', width: '100%', cursor: 'pointer' }}
-                                                onMouseDown={function () {
+                                                onMouseDown={function () { //same code as space/enter
                                                     if (endScreen) {       
                                                         setIndex(0);
                                                         for (let i = 0; i < 5; i++){
