@@ -68,8 +68,7 @@ function updateTutorial() {
 var t;
 //tower.push(x) to add to the tower
 var tower = [];
-var burgerList = []; //never will contain anything, just to hold length
-var stackHeight = 0; 
+var burgerList = []; //never will contain anything, just to hold length bc react is finnicky
 const towerStack = forwardRef((props, ref) => {
     
     //when back button is pushed, return to previous page
@@ -492,9 +491,8 @@ const towerStack = forwardRef((props, ref) => {
                     }}>{input}</animated.h1>
                  
 
-                    <animated.h1 id="testing" style={{ //Morse
-                        //temporary output to demonstrate adding to array
-                        //displays most recent letter and the current tower height
+                    <animated.h1 id="testing" style={{ //Test element to see internal functions
+                        //displays most recent letter, the current height, and total number of burgers
                         lineHeight: 0,
                         color: fontColor,
                         fontSize: sfSize,
@@ -502,6 +500,7 @@ const towerStack = forwardRef((props, ref) => {
                         bottom: '30%',
                         transform: 'translate(50%,50%)',
                         position: 'absolute',
+                        display: 'none' //comment out to use
                     }}>{tower[tower.length - 1] + ' ' + tower.length + ' ' + burgers}</animated.h1>
                 
                     </Grid>
