@@ -128,6 +128,7 @@ const towerStack = forwardRef((props, ref) => {
 
         if(tower.length == 5){ //This is where endscreen is triggered
             if(burgerList.length == 4){ //check endscreen 2 
+                document.getElementById(towerIds[4]).style.visibility = "visible";
                 document.getElementById('burger5').style.visibility = "visible";
                 setEndScreen2(true);
                 setBurgers(0);
@@ -316,7 +317,7 @@ const towerStack = forwardRef((props, ref) => {
                             display: 'flex',
                             justifyContent: 'center',
                             alignItems: 'center',
-                            zIndex: 1,
+                            zIndex: 20,
                             ...props
                         }}>
                             <div style={{
@@ -327,7 +328,7 @@ const towerStack = forwardRef((props, ref) => {
                                 opacity: 0.7
                             }} />
                             <Grid container direction='column' justify='center' alignItems='center' style={{ height: '100%', width: '100%', zIndex: 18 }}>
-                                <Grid item style={{ userSelect: 'none', cursor: 'default', zIndex:18 }}>
+                                <Grid item style={{ userSelect: 'none', cursor: 'default', zIndex:20 }}>
                                     <Card>
                                         <h1 style={{
                                             marginBottom: '0vh',
@@ -343,9 +344,14 @@ const towerStack = forwardRef((props, ref) => {
                                     <Card>
                                         <button id = "end2" style={{ fontSize: '8vh', height: '100%', width: '100%', cursor: 'pointer' }}
                                                 onMouseDown={function () {
-                                                    if (endScreen2) {                      
+                                                    if (endScreen2) { 
                                                         setIndex(0);
                                                         setBurgers(0);
+                                                        for(let i = 0; i < 5; i++){
+                                                            document.getElementById(burgerIds[i]).style.visibility = "hidden";
+                                                            document.getElementById(towerIds[i]).style.visibility = "hidden";
+                                                        }                     
+                                                        setEndScreen(false);
                                                         setEndScreen2(false);
                                                     }
                                                 }}>
@@ -401,8 +407,11 @@ const towerStack = forwardRef((props, ref) => {
                                     <Card>
                                         <button id = "end" style={{ fontSize: '8vh', height: '100%', width: '100%', cursor: 'pointer' }}
                                                 onMouseDown={function () {
-                                                    if (endScreen) {                      
+                                                    if (endScreen) {       
                                                         setIndex(0);
+                                                        for (let i = 0; i < 5; i++){
+                                                            document.getElementById(towerIds[i]).style.visibility = "hidden";
+                                                        }               
                                                         setEndScreen(false);
                                                     }
                                                 }}>
