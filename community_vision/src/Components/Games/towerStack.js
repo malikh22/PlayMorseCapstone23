@@ -68,8 +68,7 @@ function updateTutorial() {
 var t;
 //tower.push(x) to add to the tower
 var tower = [];
-var burgerList = []; //never will contain anything, just to hold length
-var stackHeight = 0; 
+var burgerList = []; //never will contain anything, just to hold length bc react is finnicky
 const towerStack = forwardRef((props, ref) => {
     
     //when back button is pushed, return to previous page
@@ -123,8 +122,7 @@ const towerStack = forwardRef((props, ref) => {
         setIndex(prevState => prevState + 1); 
         //update tower
         tower[index] = output;
-        document.getElementById(towerIds[stackHeight % 5]).style.visibility = "visible";
-        stackHeight++;
+        document.getElementById(towerIds[tower.length - 1]).style.visibility = "visible";
         }
         setInput('');
 
@@ -139,9 +137,7 @@ const towerStack = forwardRef((props, ref) => {
                 setIndex(0);
                 setBurgers(prevState => prevState + 1);
                 document.getElementById(burgerIds[burgers]).style.visibility = "visible";
-                for (let i = 0; i < 5; i++){
-                    document.getElementById(towerIds[i]).style.visibility = "hidden";
-                }
+                
             }
         }
     }, resetTimer);
@@ -159,6 +155,9 @@ const towerStack = forwardRef((props, ref) => {
             } else if (endScreen ) {
                 setEndScreen(false);
                 setIndex(0);
+                for (let i = 0; i < 5; i++){
+                    document.getElementById(towerIds[i]).style.visibility = "hidden";
+                }
             } else if (endScreen2){
                 setEndScreen2(false);
                 setEndScreen(false);
@@ -166,6 +165,7 @@ const towerStack = forwardRef((props, ref) => {
                 setBurgers(0);
                 for(let i = 0; i < 5; i++){
                     document.getElementById(burgerIds[i]).style.visibility = "hidden";
+                    document.getElementById(towerIds[i]).style.visibility = "hidden";
                 }
             } else {
                 setInput(input + '•');
@@ -179,6 +179,9 @@ const towerStack = forwardRef((props, ref) => {
             } else if (endScreen) {
                 setEndScreen(false);
                 setIndex(0);
+                for (let i = 0; i < 5; i++){
+                    document.getElementById(towerIds[i]).style.visibility = "hidden";
+                }
             } else if (endScreen2){
                 setEndScreen2(false);
                 setEndScreen(false);
@@ -186,6 +189,7 @@ const towerStack = forwardRef((props, ref) => {
                 setBurgers(0);
                 for(let i = 0; i < 5; i++){
                     document.getElementById(burgerIds[i]).style.visibility = "hidden";
+                    document.getElementById(towerIds[i]).style.visibility = "hidden";
                 }
             } else {
                 setInput(input + '-');
@@ -483,26 +487,12 @@ const towerStack = forwardRef((props, ref) => {
                         right: '50%',
                         bottom: '62%',
                         transform: 'translate(50%,50%)',
-                        position: 'absolute',
+                        position: 'absolute'
                     }}>{input}</animated.h1>
                  
 
-                    <animated.h1 id="input" sposition= 'relative' style={{ //HIDDEN Morse
-                        //hidden in an attempt to reorganize the screen to get space for the tower
-                        lineHeight: 0,
-                        color: fontColor,
-                        fontSize: sfSize,
-                        right: '80%',
-                        bottom: '45%',
-                        transform: 'translate(50%,50%)',
-                        position: 'absolute',
-                        display: 'none'
-                    }}>{input}</animated.h1>
-               
-
-                    <animated.h1 id="testing" style={{ //Morse
-                        //temporary output to demonstrate adding to array
-                        //displays most recent letter and the current tower height
+                    <animated.h1 id="testing" style={{ //Test element to see internal functions
+                        //displays most recent letter, the current height, and total number of burgers
                         lineHeight: 0,
                         color: fontColor,
                         fontSize: sfSize,
@@ -510,6 +500,7 @@ const towerStack = forwardRef((props, ref) => {
                         bottom: '30%',
                         transform: 'translate(50%,50%)',
                         position: 'absolute',
+                        display: 'none' //comment out to use
                     }}>{tower[tower.length - 1] + ' ' + tower.length + ' ' + burgers}</animated.h1>
                 
                     </Grid>
