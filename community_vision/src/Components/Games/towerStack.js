@@ -428,11 +428,11 @@ const towerStack = forwardRef((props, ref) => {
                 </div>
 
                 <Grid container direction='row'  position= 'relative' style={{ zIndex: 10, display: 'flex', justifyContent: 'right', alignItems: 'right',}}>
-                    <img src={burgerIcon} id = "burger5" alt="burger icon" style = {{ width:'80px', height:'80px', visibility: 'hidden'}} />
-                    <img src={burgerIcon} id = "burger4" alt="burger icon" style = {{ width:'80px', height:'80px', visibility: 'hidden'}} />
-                    <img src={burgerIcon} id = "burger3" alt="burger icon" style = {{ width:'80px', height:'80px', visibility: 'hidden'}} />
-                    <img src={burgerIcon} id = "burger2" alt="burger icon" style = {{ width:'80px', height:'80px', visibility: 'hidden'}} />
-                    <img src={burgerIcon} id = "burger1" alt="burger icon" style = {{ width:'80px', height:'80px', visibility: 'hidden'}} />
+                    <img src={burgerIcon} id = "burger5" alt="burger icon" style = {{ width:'4.5%', height:'4.5%', visibility: 'hidden'}} />
+                    <img src={burgerIcon} id = "burger4" alt="burger icon" style = {{ width:'4.5%', height:'4.5%', visibility: 'hidden'}} />
+                    <img src={burgerIcon} id = "burger3" alt="burger icon" style = {{ width:'4.5%', height:'4.5%', visibility: 'hidden'}} />
+                    <img src={burgerIcon} id = "burger2" alt="burger icon" style = {{ width:'4.5%', height:'4.5%', visibility: 'hidden'}} />
+                    <img src={burgerIcon} id = "burger1" alt="burger icon" style = {{ width:'4.5%', height:'4.5%', visibility: 'hidden'}} />
                 </Grid>
 
                 <div>
@@ -447,11 +447,11 @@ const towerStack = forwardRef((props, ref) => {
                     }}>{output}</animated.h1>
                    
                     <Grid container direction='column'  position= 'relative' style={{ zIndex: 10, display: 'flex', justifyContent: 'center', alignItems: 'center',}}>
-                    <img src={buntop} id = "stack5" alt="burger icon" style = {{ width:'30%', height:'8%', visibility: 'hidden'}} />
-                    <img src={tomatoTS} id = "stack4" alt="burger icon" style = {{ width:'30%', height:'10%', visibility: 'hidden'}} />
-                    <img src={cheeseTS} id = "stack3" alt="burger icon" style = {{ width:'30%', height:'10%', visibility: 'hidden'}} />
-                    <img src={pattyTS} id = "stack2" alt="burger icon" style = {{width:'30%', height:'10%', visibility: 'hidden'}} />
-                    <img src={bunbottom} id = "stack1" alt="bottom bun of burger" style = {{ width:'30%', height:'8%', visibility: 'hidden'}} />
+                    <img src={buntop} id = "stack5" alt="burger icon" style = {{ width:'30%', height:'8%', visibility: 'hidden', marginTop: '9%', zIndex:15}} />
+                    <img src={tomatoTS} id = "stack4" alt="burger icon" style = {{ width:'30%', height:'10%', visibility: 'hidden', marginTop: '-3%', zIndex:14}} />
+                    <img src={cheeseTS} id = "stack3" alt="burger icon" style = {{ width:'30%', height:'10%', visibility: 'hidden', marginTop: '-3%', zIndex:13}} />
+                    <img src={pattyTS} id = "stack2" alt="burger icon" style = {{width:'30%', height:'10%', visibility: 'hidden', marginTop: '-3%', zIndex:12}} />
+                    <img src={bunbottom} id = "stack1" alt="bottom bun of burger" style = {{ width:'30%', height:'8%', visibility: 'hidden', marginTop: '-3%', zIndex:11}} />
                 </Grid>
 
                     <animated.h1 id="input" style={{ //HIDDEN display of morse input
@@ -468,7 +468,7 @@ const towerStack = forwardRef((props, ref) => {
                         //determine where current letter should display on screen
                         lineHeight: 0,
                         right: '50%',
-                        bottom: '60%',
+                        bottom: '65%',
                         transform: 'translate(50%,50%)',
                         position: 'absolute',
                         color: fontColor,
@@ -481,13 +481,13 @@ const towerStack = forwardRef((props, ref) => {
                         color: fontColor,
                         fontSize: sfSize,
                         right: '50%',
-                        bottom: '55%',
+                        bottom: '62%',
                         transform: 'translate(50%,50%)',
                         position: 'absolute',
                     }}>{input}</animated.h1>
                  
 
-                    <animated.h1 id="input" sposition= 'relative' tyle={{ //HIDDEN Morse
+                    <animated.h1 id="input" sposition= 'relative' style={{ //HIDDEN Morse
                         //hidden in an attempt to reorganize the screen to get space for the tower
                         lineHeight: 0,
                         color: fontColor,
