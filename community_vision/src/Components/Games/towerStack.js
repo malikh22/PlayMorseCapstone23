@@ -133,13 +133,14 @@ const towerStack = forwardRef((props, ref) => {
                 setBurgers(0);
                 setIndex(0);
             } else {
+                document.getElementById(towerIds[4]).style.visibility = "visible";
                 setEndScreen(true);
                 setIndex(0);
                 setBurgers(prevState => prevState + 1);
                 document.getElementById(burgerIds[burgers]).style.visibility = "visible";
-                for (let i = 0; i < 5; i++){
+                /* for (let i = 0; i < 5; i++){
                     document.getElementById(towerIds[i]).style.visibility = "hidden";
-                }
+                } */
                 
             }
         }
@@ -373,7 +374,7 @@ const towerStack = forwardRef((props, ref) => {
                             display: 'flex',
                             justifyContent: 'center',
                             alignItems: 'center',
-                            zIndex: 1,
+                            zIndex: 18,
                             ...props
                         }}>
                             <div style={{
