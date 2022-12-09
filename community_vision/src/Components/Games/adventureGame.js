@@ -1,5 +1,5 @@
 /* 
-Tower Stack
+Adventure Game
 Main game file - in progress
 
 @Author: Emily, Natalie, Aron
@@ -23,8 +23,14 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import {useHistory} from "react-router-dom";
 import {Link} from "react-router-dom";
 
+//Pictures!
+import cabImage from "./adventureGamePics/Cab.jfif";
+import barnImage from "./adventureGamePics/Barn.jpg";
+import farmImage from "./adventureGamePics/Farm.png";
+import forestImage from "./adventureGamePics/Forest.jpg";
+import houseImage from "./adventureGamePics/House.jfif";
+
 var textIndex = 0;
-var promptsCheck = true;
 var t;
 
 function buttonClick (clicked, notClicked){
@@ -67,10 +73,6 @@ function updateTutorial() {
     }
 }
 
-function gameStart() {
-
-}
-
 const adventureGame = forwardRef((props, ref) => {
     //Lines 19-22 Just lets you go back to previous pages
     const history = useHistory();
@@ -83,6 +85,7 @@ const adventureGame = forwardRef((props, ref) => {
     var output = morseToChar(input);
 
     //Variables
+    const [backgroundPicture, setBackgroundPicture] = useState();
     const [volume, setVolume] = useState(() => initial('volume'));
     const [size, setSize] = useState(() => initial('size'));
     const [speed, setSpeed] = useState(() => initial('speed'));
@@ -92,8 +95,6 @@ const adventureGame = forwardRef((props, ref) => {
     const [dotButtonColor, setDotButtonColor] = useState(() => initial('dotButtonColor'));
     const [fontColor, setFontColor] = useState(() => initial('fontColor'));
     const resetTimer = speed * 1000; //reset timer in milliseconds
-    const fSize = size / 2 + 'vh';
-    const sfSize = size / 3 + 'vh';
 
     const [playDash] = useSound(
         dashSound,
@@ -104,6 +105,84 @@ const adventureGame = forwardRef((props, ref) => {
         { volume: volume / 100 }
     );
 
+    function clearStage() {
+        setStartScreen(false);
+        setEndScreen(false);
+        setCabScreen(false);
+        setFarmScreen(false);
+        setHouseScreen(false);
+        setForestScreen(false);
+        setBarnScreen(false);
+
+        setWord("");
+    }
+    
+    function checkCurrentWord() {
+        //Don't know why switch doesn't work but a bunch of if's do.
+        if(currentWord === "TEST") {
+            setCurrentScreen("End");
+            setBackgroundPicture();
+            clearStage();
+            setEndScreen(true);
+        }
+        if(currentWord === "CAB") {
+            setCurrentScreen("Cab");
+            setBackgroundPicture(cabImage);
+            clearStage();
+            setCabScreen(true);
+        }
+        if(currentWord === "FARM") {
+            setCurrentScreen("Farm");
+            setBackgroundPicture(farmImage);
+            clearStage();
+            setFarmScreen(true);
+        }
+        if(currentWord === "HOUSE") {
+            setCurrentScreen("House");
+            setBackgroundPicture(houseImage);
+            clearStage();
+            setHouseScreen(true);
+        }
+        if(currentWord === "FOREST") {
+            setCurrentScreen("Forest");
+            setBackgroundPicture(forestImage);
+            clearStage();
+            setForestScreen(true);
+        }
+        if(currentWord === "BARN") {
+            setCurrentScreen("Barn");
+            setBackgroundPicture(barnImage);
+            clearStage();
+            setBarnScreen(true);
+        }
+        
+        // switch(currentWord) {
+        //     case "TEST":
+        //         clearStage();
+        //         setEndScreen(true);
+        //     case "CAB":
+        //         clearStage();
+        //         setCabScreen(true);
+        //         break;
+        //     case "FARM":
+        //         clearStage();
+        //         setFarmScreen(true);
+        //         break;
+        //     case "HOUSE":
+        //         clearStage();
+        //         setFarmScreen(true);
+        //         break;
+        //     case "FOREST":
+        //         clearStage();
+        //         setForestScreen(true);
+        //         break;
+        //     case "BARN":
+        //         clearStage();
+        //         setBarnScreen(true);
+        //         break;
+        // }
+    }
+
     //This will reset the inputted morse depending on length/time
     resetInputLength(input, setInput);
     clearTimeout(t);
@@ -112,18 +191,24 @@ const adventureGame = forwardRef((props, ref) => {
         setWord(currentWord + output);
         }
         setInput('');
+        checkCurrentWord();
     }, resetTimer);
     resetInputLength(input, setInput);
 
     const [handleKeyDown, setHandleKeyDown] = useState(true);
     document.onkeydown = function (evt) {
+        //Prevents "holding" a button down.
+        if (!handleKeyDown) return;
+        setHandleKeyDown(false);
+
         //If "Space"
-        if (evt === 32) {
+        //".keyCode" is deprecated, but required?
+        if (evt.keyCode === 32) {
             setInput(input + '•');
             playDot();
         }
         //If "Enter"
-        if (evt === 13) {
+        if (evt.keyCode === 13) {
             setInput(input + '-');
             playDash();
         }
@@ -131,7 +216,8 @@ const adventureGame = forwardRef((props, ref) => {
 
     document.onkeyup = function (evt) {
         setHandleKeyDown(true);
-        document.activeElement.blur();
+        //I'm not sure what the use of
+        //document.activeElement.blur();
     };
 
     //Stuff to make it look prettier
@@ -142,11 +228,16 @@ const adventureGame = forwardRef((props, ref) => {
 
     const [currentWord, setWord] = useState("");
 
-    //States will be used to go "around" the pages. Use this for the adventure.
-    const [state, setState] = useState("home");
+    //Screens have to be boolean in order to set items to "true" or "false" without checks.
+    const [startScreen, setStartScreen] = useState(true);
+    const [endScreen, setEndScreen] = useState(false);
+    const [cabScreen, setCabScreen] = useState(false);
+    const [farmScreen, setFarmScreen] = useState(false);
+    const [houseScreen, setHouseScreen] = useState(false);
+    const [forestScreen, setForestScreen] = useState(false);
+    const [barnScreen, setBarnScreen] = useState(false);
 
-    var [startScreen, setStartScreen] = useState(true);
-    var [endScreen, setEndScreen] = useState(false);
+    const [currentScreen, setCurrentScreen] = useState("Start");
 
     useImperativeHandle(
         ref,
@@ -165,15 +256,19 @@ const adventureGame = forwardRef((props, ref) => {
     )
 
     return (
+        //This is the "Main" screen
         <div style={{
-            backgroundColor: backgroundColor,
-            height: '90vh',
-            width: '100vw',
+            // backgroundColor: backgroundColor,
+            backgroundImage: `url(${backgroundPicture})`,
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
             display: 'grid',
             gridTemplate: '8fr 8fr / 1fr',
             gridTemplateAreas: '"top" "middle" "bottom'
         }}>
-            <Transition
+            
+            <Transition //Tutorial transition, "Start Screen"
                 items={startScreen}
                 duration={500}
                 from={{ opacity: 0 }}
@@ -225,14 +320,12 @@ const adventureGame = forwardRef((props, ref) => {
                                             <Grid> 
                                                 <button id = "yesPrompts" style={{ border: 'none','margin-left':'30px','margin-right':'30px', fontSize: '5vh', cursor: 'pointer', 'outline-style':'solid','outline-width':'thick'}} 
                                                 onMouseDown={function () {
-                                                    promptsCheck = true;
                                                     buttonClick("yesPrompts","noPrompts");
                                                     }}>
                                                     Yes                  
                                                 </button>
 
                                                 <button id = "noPrompts" style={{ border: 'none',fontSize: '5vh', cursor: 'pointer', 'outline-style':'solid', 'outline-width':'thick'}} onMouseDown={function () {
-                                                    promptsCheck = false;
                                                     buttonClick("noPrompts","yesPrompts");
                                                     }}>
                                                     No                   
@@ -261,8 +354,7 @@ const adventureGame = forwardRef((props, ref) => {
                                         <button id= "start" style={{display: 'none', fontSize: '8vh', height: '100%', width: '100%', cursor: 'pointer' }}
                                             onMouseDown={function () {
                                                 if (startScreen) {
-                                                    setState("home");
-                                                    gameStart();
+                                                    //setState("home");
                                                     setStartScreen(false);
                                                 }
                                             }}>
@@ -275,53 +367,64 @@ const adventureGame = forwardRef((props, ref) => {
                         : props => <div />
                 }
             </Transition>
-            <div style={{gridArea: 'top'}}>
-                <div style={{ position: 'absolute' }}>
-                    <Container>
-                        <Link className='nav-link' to="/GamesThemes">
-                            <button style={{
-                                height: '90%',
-                                width: '100%',
-                                fontSize: '4vh',
-                                fontWeight: 800,
-                                userSelect: 'none',
-                                cursor: 'pointer',
-                                marginBottom: "20px"
-                            }}>Back</button>
-                        </Link>
-                        <Grid container justify='left'>
-                            <Grid item>
-                                <div style={{
-                                    position: 'absolute',
-                                    left: '2vw',
-                                    top: '9vh',
-                                    fontSize: '7vh',
-                                    pointer: 'default',
-                                    userSelect: 'none',
-                                    color: fontColor
-                                }}>
-                                    <p>
-                                        Current Word: {currentWord}
-                                    </p>
-                                </div>
-                            </Grid>
-                        </Grid>
-                    </Container>
-                </div>
-                <div>
-                    <animated.h1 id = "output" style={{
-                        lineHeight: 0,
-                        color: fontColor,
-                        fontSize: fSize
-                    }}>{output}</animated.h1>
-                    <animated.h1 style={{
-                        lineHeight: 0,
-                        color: fontColor,
-                        fontSize: sfSize
-                    }}></animated.h1>
-                </div>
+
+            <Transition> //CabScreen
+                items = {cabScreen};
+            </Transition>
+
+            <Transition> //FarmScreen
+                items = {farmScreen};
+            </Transition>
+
+            <Transition> //HouseScreen
+                items = {houseScreen};
+            </Transition>
+
+            <Transition> //ForestScreen
+                items ={forestScreen}
+            </Transition>
+
+            <Transition> //BarnScreen
+                items = {barnScreen};
+            </Transition>
+            
+            <div style={{gridArea: 'top', position: 'absolute'}}>
+                <Container>
+                    <Link className='nav-link' to="/GamesThemes">
+                        <button style={{
+                            height: '90%',
+                            width: '100%',
+                            fontSize: '4vh',
+                            fontWeight: 800,
+                            userSelect: 'none',
+                            cursor: 'pointer',
+                        }}>Back</button>
+                    </Link>              
+                    <Grid item>
+                        <div style={{
+                            position: 'absolute',
+                            left: '1vw',
+                            top: '9vh',
+                            fontSize: '3vh',
+                            pointer: 'default',
+                            userSelect: 'none',
+                            color: fontColor
+                        }}>
+                            <p>
+                                Current Word: {currentWord}
+                            </p>
+                            <p>
+                                Current Score: {gemDisplay}
+                            </p>
+                            <p>
+                                Current Stage: {currentScreen}
+                            </p>
+                        </div>
+                    </Grid>
+                </Container>
             </div>
-            <Transition
+
+            <Transition //End Screen
                 items={endScreen}
                 duration={500}
                 from={{ opacity: 0 }}
@@ -396,37 +499,7 @@ const adventureGame = forwardRef((props, ref) => {
                         : props => <div />
                 }
             </Transition>
-            <div style={{ gridArea: 'top' }}>
-                {/* {lettersList} */}
-                <div style={{
-                    position: 'absolute',
-                    right: '2vw',
-                    top: '9vh',
-                    fontSize: '7vh',
-                    pointer: 'default',
-                    userSelect: 'none',
-                    color: fontColor
-                }}>
-                    <p>
-                        {gemDisplay}
-                    </p>
-                </div>
-                <div style={{ position: 'absolute' }}>
-                    <Container>
-                        <Link className='nav-link' to="/GamesThemes">
-                            <button style={{
-                                height: '90%',
-                                width: '100%',
-                                fontSize: '4vh',
-                                fontWeight: 800,
-                                userSelect: 'none',
-                                cursor: 'pointer',
-                                marginBottom: "20px"
-                            }}>Back</button>
-                        </Link>
-                    </Container>
-                </div>
-            </div>
+
             <div style={{ gridArea: 'middle' }}>
                 <Container>
                     <Grid container justify='center' spacing={0}>
@@ -516,6 +589,7 @@ const adventureGame = forwardRef((props, ref) => {
                     </Grid>
                 </Container>
             </div>
+            
         </div>
     );
 })
@@ -570,6 +644,5 @@ const RadioContent = () => {
         </div>
     );
 };
-
 
 export default adventureGame;
