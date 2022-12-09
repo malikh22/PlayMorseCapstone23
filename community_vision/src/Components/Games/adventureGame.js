@@ -24,7 +24,8 @@ import {useHistory} from "react-router-dom";
 import {Link} from "react-router-dom";
 
 //Pictures!
-import cabImage from "./adventureGamePics/Cab.jfif";
+import cabImage from "./adventureGamePics/Cab.png";
+import InCabImage from "./adventureGamePics/InCab.png";
 import barnImage from "./adventureGamePics/Barn.jpg";
 import farmImage from "./adventureGamePics/Farm.png";
 import forestImage from "./adventureGamePics/Forest.jpg";
@@ -85,12 +86,9 @@ const adventureGame = forwardRef((props, ref) => {
     var output = morseToChar(input);
 
     //Variables
-    const [backgroundPicture, setBackgroundPicture] = useState();
+    const [backgroundPicture, setBackgroundPicture] = useState(cabImage);
     const [volume, setVolume] = useState(() => initial('volume'));
-    const [size, setSize] = useState(() => initial('size'));
     const [speed, setSpeed] = useState(() => initial('speed'));
-    const [backgroundColor, setBackgroundColor] = useState(() => initial('backgroundColor'));
-    const [buttonColor, setButtonColor] = useState(() => initial('buttonColor'));
     const [dashButtonColor, setDashButtonColor] = useState(() => initial('dashButtonColor'));
     const [dotButtonColor, setDotButtonColor] = useState(() => initial('dotButtonColor'));
     const [fontColor, setFontColor] = useState(() => initial('fontColor'));
@@ -125,9 +123,9 @@ const adventureGame = forwardRef((props, ref) => {
             clearStage();
             setEndScreen(true);
         }
-        if(currentWord === "CAB") {
+        if(currentWord === "CAB" || currentWord ==="TAXI") {
             setCurrentScreen("Cab");
-            setBackgroundPicture(cabImage);
+            setBackgroundPicture(InCabImage);
             clearStage();
             setCabScreen(true);
         }
@@ -223,8 +221,8 @@ const adventureGame = forwardRef((props, ref) => {
     //Stuff to make it look prettier
     //TODO: Test if Gems work
     const [gemScore, setGems] = useState(0);
-    const gemDisplay = "";
-    for (var i = 0; i < gemScore; i++) { gemDisplay = gemDisplay + "GEM "; }
+    var gemDisplay = "";
+    for (var i = 0; i < gemScore; i++) { gemDisplay = gemDisplay + "💎";}
 
     const [currentWord, setWord] = useState("");
 
@@ -244,13 +242,13 @@ const adventureGame = forwardRef((props, ref) => {
         () => ({
             update() {
                 setVolume(initial('volume'));
-                setSize(initial('size'));
+                // setSize(initial('size'));
                 setSpeed(initial('speed'));
-                setBackgroundColor(initial('backgroundColor'));
+                // setBackgroundColor(initial('backgroundColor'));
                 setDashButtonColor(initial('dashButtonColor'));
                 setDotButtonColor(initial('dotButtonColor'));
                 setFontColor(initial('fontColor'));
-                setButtonColor(initial("buttonColor"));
+                // setButtonColor(initial("buttonColor"));
             }
         }),
     )
@@ -258,11 +256,13 @@ const adventureGame = forwardRef((props, ref) => {
     return (
         //This is the "Main" screen
         <div style={{
-            // backgroundColor: backgroundColor,
             backgroundImage: `url(${backgroundPicture})`,
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
+            backgroundSize: '80%',
+            // width: '100vw',
+            // height: '100vh',
             display: 'grid',
             gridTemplate: '8fr 8fr / 1fr',
             gridTemplateAreas: '"top" "middle" "bottom'
@@ -387,7 +387,7 @@ const adventureGame = forwardRef((props, ref) => {
             <Transition> //BarnScreen
                 items = {barnScreen};
             </Transition>
-            
+
             <div style={{gridArea: 'top', position: 'absolute'}}>
                 <Container>
                     <Link className='nav-link' to="/GamesThemes">
