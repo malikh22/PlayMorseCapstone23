@@ -322,7 +322,7 @@ const towerStack = forwardRef((props, ref) => {
                             display: 'flex',
                             justifyContent: 'center',
                             alignItems: 'center',
-                            zIndex: 20,
+                            zIndex: 11,
                             ...props
                         }}>
                             <div style={{
@@ -332,13 +332,13 @@ const towerStack = forwardRef((props, ref) => {
                                 backgroundColor: 'black',
                                 opacity: 0.7
                             }} />
-                            <Grid container direction='column' justify='center' alignItems='center' style={{ height: '100%', width: '100%', zIndex: 18 }}>
-                                <Grid item style={{ userSelect: 'none', cursor: 'default', zIndex:20 }}>
+                            <Grid container direction='column' justify='center' alignItems='center' style={{ height: '100%', width: '100%', zIndex: 10 }}>
+                                <Grid item style={{ userSelect: 'none', cursor: 'default', zIndex:11 }}>
                                     <Card>
                                         <h1 style={{
                                             marginBottom: '0vh',
                                             fontSize: '8vh',
-                                            zIndex: '18' 
+                                            zIndex: '10' 
                                         }}>You completed all five burgers!
                                         </h1>
                                         <br></br>
@@ -385,7 +385,7 @@ const towerStack = forwardRef((props, ref) => {
                             display: 'flex',
                             justifyContent: 'center',
                             alignItems: 'center',
-                            zIndex: 18,
+                            zIndex: 10,
                             ...props
                         }}>
                             <div style={{
@@ -395,13 +395,13 @@ const towerStack = forwardRef((props, ref) => {
                                 backgroundColor: 'black',
                                 opacity: 0.7
                             }} />
-                            <Grid container direction='column' justify='center' alignItems='center' style={{ height: '100%', width: '100%', zIndex: 18 }}>
-                                <Grid item style={{ userSelect: 'none', cursor: 'default', zIndex:18}}>
+                            <Grid container direction='column' justify='center' alignItems='center' style={{ height: '100%', width: '100%', zIndex: 10 }}>
+                                <Grid item style={{ userSelect: 'none', cursor: 'default', zIndex:10}}>
                                     <Card>
                                         <h1 style={{
                                             marginBottom: '0vh',
                                             fontSize: '8vh',
-                                            zIndex: '18'
+                                            zIndex: '10'
                                         }}>You completed the burger!
                                         </h1>
                                         <br></br>
@@ -451,7 +451,7 @@ const towerStack = forwardRef((props, ref) => {
                     </Container>
                 </div>
 
-                <Grid container direction='row'  position= 'relative' style={{ zIndex: 10, display: 'flex', justifyContent: 'right', alignItems: 'right',}}>
+                <Grid container direction='row'  position= 'relative' style={{ zIndex: 3, display: 'flex', justifyContent: 'right', alignItems: 'right',}}>
                     <img src={burgerIcon} id = "burger5" alt="burger icon" style = {{ width:'4.5%', height:'4.5%', visibility: 'hidden'}} />
                     <img src={burgerIcon} id = "burger4" alt="burger icon" style = {{ width:'4.5%', height:'4.5%', visibility: 'hidden'}} />
                     <img src={burgerIcon} id = "burger3" alt="burger icon" style = {{ width:'4.5%', height:'4.5%', visibility: 'hidden'}} />
@@ -467,15 +467,15 @@ const towerStack = forwardRef((props, ref) => {
                         color: fontColor,
                         fontSize: tfSize, //smaller font slightly for tower 
                         minHeight: '90%',
-                        display: 'none'
+                        display: 'none',
                     }}>{output}</animated.h1>
                    
-                    <Grid container direction='column'  position= 'relative' style={{ zIndex: 10, display: 'flex', justifyContent: 'center', alignItems: 'center',}}>
-                    <img src={buntop} id = "stack5" alt="burger icon" style = {{ width:'27%', height:'8%', visibility: 'hidden', marginTop: '9%', zIndex:15}} />
-                    <img src={tomatoTS} id = "stack4" alt="burger icon" style = {{ width:'27%', height:'10%', visibility: 'hidden', marginTop: '-3%', zIndex:14}} />
-                    <img src={cheeseTS} id = "stack3" alt="burger icon" style = {{ width:'27%', height:'10%', visibility: 'hidden', marginTop: '-3%', zIndex:13}} />
-                    <img src={pattyTS} id = "stack2" alt="burger icon" style = {{width:'27%', height:'10%', visibility: 'hidden', marginTop: '-3%', zIndex:12}} />
-                    <img src={bunbottom} id = "stack1" alt="bottom bun of burger" style = {{ width:'27%', height:'8%', visibility: 'hidden', marginTop: '-3%', marginBottom: '-7%', zIndex:11}} />
+                    <Grid container direction='column'  position= 'relative' style={{ zIndex: 2, display: 'flex', justifyContent: 'center', alignItems: 'center',}}>
+                    <img src={buntop} id = "stack5" alt="top bun of burger" style = {{ width:'27%', height:'8%', visibility: 'hidden', marginTop: '9%', zIndex:3}} />
+                    <img src={tomatoTS} id = "stack4" alt="tomato" style = {{ width:'27%', height:'10%', visibility: 'hidden', marginTop: '-3%', zIndex:2}} />
+                    <img src={cheeseTS} id = "stack3" alt="cheese" style = {{ width:'27%', height:'10%', visibility: 'hidden', marginTop: '-3%', zIndex:1}} />
+                    <img src={pattyTS} id = "stack2" alt="burger patty" style = {{width:'27%', height:'10%', visibility: 'hidden', marginTop: '-3%', zIndex:0}} />
+                    <img src={bunbottom} id = "stack1" alt="bottom bun of burger" style = {{ width:'27%', height:'8%', visibility: 'hidden', marginTop: '-3%', marginBottom: '-7%'}} />
                 </Grid>
 
                     <animated.h1 id="input" style={{ //HIDDEN display of morse input

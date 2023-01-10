@@ -94,7 +94,8 @@ const Settings = forwardRef((props, ref) => {
             fontSize: fSize,
             background: backgroundColor,
             margin: 'auto',
-            zIndex: 2
+            position: 'relative',
+            zIndex: '12',
         }
     };
 
@@ -139,6 +140,8 @@ const Settings = forwardRef((props, ref) => {
             'vertical-align': 'top',
             'vertical-align': 'middle',
             background: dotButtonColor,
+            postion: 'relative',
+            zIndex: '12',
         }
     };
 
@@ -154,6 +157,8 @@ const Settings = forwardRef((props, ref) => {
             'align-items': 'center',
             'vertical-align': 'middle',
             background: dashButtonColor,
+            postion: 'relative',
+            zIndex: '12',
         }
     };
 
@@ -177,7 +182,9 @@ const Settings = forwardRef((props, ref) => {
             top: '0vh',
             height: '81vh',
             width: '100vw',
-            bottom: '0vh'
+            bottom: '0vh',
+            postion: 'relative',
+            zIndex: '12',
         }}>
             <Card borderRadius='3vh'>
                 <Grid style={{ height: '90vh', paddingTop: '2vh'}} container> 
@@ -232,7 +239,7 @@ const Settings = forwardRef((props, ref) => {
                         </Grid>
                         <Grid item >
                             <div style={backgroundPreview.rectangle}>A a</div>
-                            <Grid alignItems ='center' container direction= 'row' style={{zIndex: 1, marginLeft: '20%', marginTop: '-15vh'}}>
+                            <Grid alignItems ='center' container direction= 'row' style={{position: 'relative', zIndex: 12, marginLeft: '20%', marginTop: '-15vh'}}>
                                 <div style={dotPreview.rectangle}>•</div>
                                 <div style={dashPreview.rectangle}>-</div>
                             </Grid>
@@ -376,6 +383,8 @@ class ColorPicker extends React.Component {
                     height: '5vh',
                     borderRadius: '2px',
                     background: this.state.color,
+                    postion: 'relative',
+                    zIndex: '12',
                 },
                 swatch: {
                     background: '#fff',
@@ -383,19 +392,24 @@ class ColorPicker extends React.Component {
                     boxShadow: '0 0 0 1px rgba(0,0,0,.1)',
                     display: 'inline-block',
                     cursor: 'pointer',
+                    postion: 'relative',
+                    zIndex: '12',
                 },
                 popover: {
                     position: 'absolute',
                     marginTop: '-250px',
                     marginLeft: '-180px',
-                    zIndex: '10',
+                    postion: 'relative',
+                    zIndex: '12',
                 },
                 cover: {
-                    position: 'fixed',
+                    position: 'relative',
                     top: '0px',
                     right: '0px',
                     bottom: '0px',
                     left: '0px',
+                    postion: 'relative',
+                    zIndex: '12',
                 },
             },
         });
